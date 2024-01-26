@@ -1,0 +1,33 @@
+
+.footer-logo img{
+    width:50%;
+    margin-bottom: 1rem;
+    margin-top: -1rem;
+}
+
+.footer-logo p{
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.social-links span a{
+    text-decoration: none;
+    color: var(--header-color);
+    font-size: 1.2rem;
+}
+
+.footer-link-title{
+    color: var(--header-color);
+    margin-bottom: 1rem;
+}
+
+.footer-quick-links li a{
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 1.1rem;
+}
+
+.contact-info p i{
+    color: var(--secondary-color);
+    font-size: 1.1rem;
+}

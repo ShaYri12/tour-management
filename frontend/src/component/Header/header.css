@@ -1,0 +1,26 @@
+.header{
+    height:80px;    
+}
+
+.navbar{
+    transition: 0.5s;
+}
+
+.navbar-brand img{
+    width:150px;
+}
+
+.nav-item a{
+    color: var(--heading-color);
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.nav-item a:hover{
+    color:inherit;
+}
+
+.nav-item a.active{
+    color: var(--secondary-color) !important;
+}
+
