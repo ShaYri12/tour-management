@@ -7,6 +7,7 @@ import tourRoute from './routes/tours.js'
 import userRoute from './routes/users.js'
 import authRoute from './routes/auth.js'
 import reviewRoute from './routes/reviews.js'
+import bookingRoute from './routes/bookings.js'
 
 dotenv.config();
 const app = express();
@@ -15,6 +16,7 @@ const corsOption ={
     origin: true,
     credentials: true,
 }
+
 // //testing
 // app.get('/',(req,res)=>{
 //     res.send("api is working");
@@ -35,10 +37,12 @@ const connect = async () => {
 app.use(express.json())
 app.use(cors(corsOption))
 app.use(cookieParser())
-app.use('api/vi/auth', authRoute)
-app.use('api/vi/tours', tourRoute)
-app.use('api/vi/users', userRoute)
-app.use('api/vi/review', reviewRoute)
+app.use('/api/auth', authRoute)
+app.use('/api/tours', tourRoute)
+app.use('/api/users', userRoute)
+app.use('/api/review', reviewRoute)
+app.use('/api/booking', bookingRoute)
+
 
 app.listen(port,()=>{
     connect();
