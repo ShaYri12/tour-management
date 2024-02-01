@@ -1,15 +1,25 @@
 import React from 'react'
 import TourCard from '../../shared/TourCard';
-import tourData from '../../assets/data/tours';
 
+import useFetch from '../../hooks/useFetch';
+import { BASE_URL } from '../../utils/config';
 
 const FeatureTourList = () => {
+
+  const {data: featuredTours, loading, error} = useFetch(`${BASE_URL}/tours/search/getFeaturedTours`)
+  console.log(featuredTours)
   return (
     <>
     {
-        tourData?.map(tour=>(
+      loading && <h4>Loading.......</h4>
+    }
+    {
+      error && <h4>{error}</h4>
+    }
+    {!loading && !error &&
+        featuredTours?.map(tour=>(
             <div className="col-12 col-md-4 col-sm-6 col-lg-3 mb-4" key={tour.id}>
-                <TourCard tour={tour}/>
+                <TourCard tour={tour}  />
             </div>
         ))}
     </>
