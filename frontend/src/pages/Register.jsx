@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import '../styles/login.css';
 import {Link, useNavigate} from 'react-router-dom';
 
@@ -6,6 +6,9 @@ import RegisterImg from '../assets/images/register.png'
 import userIcon from '../assets/images/user.png'
 
 const Register = () => {
+  useEffect(() => {
+    window.scrollTo(0, 1);
+  }, []);
 
   const [credentials, setCredentials] = useState({
     userName:undefined,
@@ -30,7 +33,7 @@ const Register = () => {
         <div className='row'> 
           <div className='col-lg-8 m-auto'>
             <div className='login-container d-flex justify-content-between'>
-              <div className='login-img'>
+              <div className='login-img d-flex justify-content-center'>
                 <img src={RegisterImg} alt=""/>
               </div>
               <div className='login-form'>

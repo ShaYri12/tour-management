@@ -14,11 +14,11 @@ const Footer = () => {
                 <section className="footer-columns">
                   <div className="container-fluid text-center text-md-start">
                     <div className="row ">              
-                        <div className="col-md-3 col-lg-3 footer-logo mx-auto mb-4">
-                          <img src={logo} alt=""/>
+                        <div className="col-md-3 col-lg-3 footer-logo mx-auto mb-4 mt-2">
+                          <img className='img-fluid ' src={logo} alt=""/>
                           <p>lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, enim.</p>
                         
-                          <div className='social-links d-flex align-itms-center gap-4'>
+                          <div className='social-links d-flex align-itms-center justify-content-md-start justify-content-center gap-4'>
                             <span>
                               <Link to="#"><i className='ri-youtube-line'></i></Link>
                             </span>
@@ -47,7 +47,7 @@ const Footer = () => {
                       </div>
 
                       <div className="col-md-2 col-lg-3  mx-auto mb-4">
-                        <h6 className="text-uppercase fw-bold mb-4 footer-heading">
+                        <h6 className="footer-link-title text-uppercase fw-bold mb-4 footer-heading">
                         Quick Links
                         </h6>
                         <p>
@@ -62,12 +62,12 @@ const Footer = () => {
                       </div>
 
                       <div className="col-md-4 col-lg-3 mx-auto contact-info">
-                        <h6 className="text-uppercase fw-bold mb-4 footer-heading">Contact</h6>
+                        <h6 className="footer-link-title text-uppercase fw-bold mb-4 footer-heading">Contact</h6>
                         <p className=" gap-2">
                           <i className="ri-map-pin-line"></i> <b className="para-highlight"> Address: </b> Lyari, Karachi
                         </p>
                         <p className=" gap-2">
-                          <i className="ri-mail-line"></i> <b className="para-highlight"> Email: </b> xyz@example.com
+                          <i className="ri-mail-line"></i> <b className="para-highlight overflow-show"> Email: </b> xyz@example.com
                         </p>
                         <p className=" gap-2">
                           <i className="ri-phone-fill"></i> <b className="para-highlight"> Phone: </b> +0123456788

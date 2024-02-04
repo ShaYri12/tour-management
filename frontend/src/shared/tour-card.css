@@ -2,7 +2,11 @@
     width: 100%;
     border-radius: 5px 5px 0 0;
 }
-
+.tour-card {
+    max-width: 100%;
+    width: 100%;
+    overflow: hidden;
+}
 .card{
     border: none !important;
     box-shadow: rgba(0,0,0,0.2) 0px 10px 50px -10px;
@@ -87,4 +91,27 @@
 
 .booking-btn a:hover{
     color: #fff;
+}
+
+@media (max-width: 1200px) {
+    .tour-img span{
+        font-size: 0.9rem;
+    }
+    
+    .card-bottom{
+        flex-direction: column;
+        row-gap: 10px ;
+    }
+}
+@media (max-width: 575px) {
+    .tour-img span{
+        font-size: 1rem;
+    }
+    
+}
+@media (max-width: 270px) {
+    .tour-img span{
+        font-size: 0.9rem;
+    }
+    
 }

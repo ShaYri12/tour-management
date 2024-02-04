@@ -37,6 +37,14 @@
     padding-top: 3.5rem;
 }
 
+@media screen and (max-width: 992px){
+    .hero-content{
+        padding-top: 0;
+    }
+}
+
+
+
 .hero-img-box{
     padding-top: 2rem;
 }

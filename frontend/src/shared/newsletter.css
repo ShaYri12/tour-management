@@ -29,7 +29,7 @@
 
 .newsletter-input input{
     border: none;
-    width: 450px;
+    width: 100% !important;
     font-size: 1rem;
     color: var(--heading-color);
 }
@@ -43,6 +43,51 @@
     background: var(--secondary-color) !important;
     color: #fff !important;
     font-size: 1.1rem !important;
+    width: 50%;
+}
+
+
+
+@media screen and (max-width: 500px) {
+    .newsletter-content h2{
+        font-size: 1.9rem;
+    }
+    .newsletter-btn{
+        padding: 0.2rem 1rem !important;
+        font-size: 1.1rem !important;
+    }
+    .newsletter-content p{
+        color: var(--heading-color);    
+        font-size: .9rem !important;
+    }
+}
+
+@media screen and (max-width: 331px) {
+    .newsletter-content h2{
+        font-size: 1.3rem !important;
+    }
+    .newsletter-content p{
+        color: var(--heading-color);    
+        font-size: .6rem !important;
+    }
+}
+
+@media screen and (max-width: 360px){
+    .newsletter-btn{
+        padding: 0 !important;
+        font-size: 1rem !important;
+    }
+
+    .newsletter-input input::placeholder{
+        font-size: 0.9rem;
+    }
+    
+}
+
+@media screen and (max-width: 300px){
+    .newsletter-btn{
+        font-size: 0.8rem !important;
+    }
 }
 
 .newsletter-content p{

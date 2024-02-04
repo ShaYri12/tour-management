@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import '../styles/tour-details.css';
 import { useParams } from 'react-router-dom';
 import tourData from '../assets/data/tours'
@@ -8,6 +8,10 @@ import Booking from '../component/Booking/Booking'
 import Newsletter from '../shared/Newsletter'
 
 const TourDetails = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const {id} = useParams();
   const reviewMsgRef = useRef('')
   const [tourRating, setTourRating]= useState(null)

@@ -58,7 +58,7 @@ const Header = () => {
               <NavLink className="nav-link" to="/about">About</NavLink>
             </li>
           </ul>
-          <div className="nav-btns d-flex align-items-center flex-md-column flex-lg-row justify-content-center gap-2 gap-md-4 mt-lg-0 mt-md-3">
+          <div className="nav-btns d-flex align-items-center flex-lg-row flex-column justify-content-center gap-2 gap-md-4 mt-lg-0 mt-md-3">
             <button className="btn-login secondary-btn btn">
               <Link  to='/login'>Login</Link>
             </button>

@@ -9,7 +9,7 @@ const TourCard = ({tour}) => {
     const {totalRating, avgRating} = calculateAvgRating(reviews);
     
   return (
-    <div className="card tour-card" key={_id} style={{width: "18rem"}}>
+    <div className="card tour-card mx-auto d-flex mb-4" key={_id} style={{width: "18rem"}}>
         <div className='tour-img'>
         <img src={photo} className="card-img-top" alt="tour-img"/>
         {featured && <span> Featured</span>}
