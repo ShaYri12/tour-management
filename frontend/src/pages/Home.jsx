@@ -108,16 +108,16 @@ const Home = () => {
                 Quas aliquam, hic tompora inventore suscipit unde.
               </p>
             </div>
-            <div className='counter-wrapper row d-flex px-2 text-center justify-content-around align-items-center gap-5'>
-              <div className='counter-box  col-md-3  col-12'>
+            <div className='counter-wrapper  d-flex flex-column flex-sm-row px-2 text-center justify-content-around align-items-center gap-5'>
+              <div className='counter-box '>
                 <span>2k+</span>
                 <h6>Successful Trip</h6>
               </div>
-              <div className='counter-box col-md-3  col-12'>
+              <div className='counter-box '>
                 <span>2k+</span>
                 <h6>Regular clients</h6>
               </div>
-              <div className='counter-box col-md-3  col-12'>
+              <div className='counter-box '>
                 <span>15+</span>
                 <h6>Years experience</h6>
               </div>
@@ -134,7 +134,7 @@ const Home = () => {
     {/* ================ Experience-Section-End ================ */}
 
     {/* ================ Gallery-Section-Start ================ */}
-    <section>
+    <section id="gallery-section">
       <div className='container'>
         <div className='row'>
           <div className='col-lg-12'>

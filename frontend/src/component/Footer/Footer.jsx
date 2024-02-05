@@ -51,7 +51,7 @@ const Footer = () => {
                         Quick Links
                         </h6>
                         <p>
-                          <Link to="#!" className="text-reset">Gallery</Link>
+                          <a href="/home/#gallery-section" className="text-reset">Gallery</a>
                         </p>
                         <p>
                           <Link to="/login" className="text-reset">Login </Link>

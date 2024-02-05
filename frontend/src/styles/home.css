@@ -115,10 +115,18 @@
 
 .masonry-img{
     transition: .3s;
+    border-radius: 10px;
 }
 
 .masonry-img:hover{
     transform: scale(1.1);
+}
+
+.__react_modal_image__header{
+    background-color: transparent !important;
+}
+.__react_modal_image__medium_img{
+    background-color: transparent !important;
 }
 
 .testimonial-title{

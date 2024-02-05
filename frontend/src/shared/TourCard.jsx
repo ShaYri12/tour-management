@@ -19,15 +19,15 @@ const TourCard = ({tour}) => {
             <span className='tour-location d-flex align-item-center gap-1'>
                 <i className="ri-map-pin-line"></i>{city}
             </span>
-            <span className='tour-rating d-flex align-item-center gap-1'>
+            <span className='tour-rating d-flex align-item-center gap-1 ps-2' >
                 <i className="ri-star-fill"></i>
                     {avgRating == 0 ? null : avgRating}
-                    {totalRating == 0 ? ('Not Rated'):(
+                    {totalRating == 0 ? <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Not Rated</span>:(
                         <span>({reviews.length})</span>
                     )}
             </span>
             </div>
-            <h5 className="tour-title">
+            <h5 className="tour-title"  style={{whiteSpace: "nowrap", overflow: 'hidden', textOverflow: 'ellipsis'}}>
                 <Link to={`/tours/${_id}`}>{title}</Link>
             </h5>
 
