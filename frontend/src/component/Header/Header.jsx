@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
-import { NavLink, Link } from "react-router-dom";
+import React, { useEffect, useContext } from 'react'
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import './header.css'
+import { AuthContext } from '../../context/AuthContext'
 
 const Header = () => {
   useEffect(() => {
@@ -36,6 +37,15 @@ const Header = () => {
     };
   }, []);
 
+  const navigate = useNavigate();
+  const {user, dispatch} = useContext(AuthContext)
+
+  const logout = () =>{
+    dispatch({type:'LOGOUT'})
+    navigate('/')
+  }
+
+
   return (
     <div className="header ">
     <nav className="navbar navbar-expand-lg navbar-light fixed-top bg-white shadow-sm">
@@ -59,12 +69,24 @@ const Header = () => {
             </li>
           </ul>
           <div className="nav-btns d-flex align-items-center flex-lg-row flex-column justify-content-center gap-2 gap-md-4 mt-lg-0 mt-md-3">
-            <button className="btn-login secondary-btn btn">
-              <Link  to='/login'>Login</Link>
-            </button>
-            <button className="btn-register primary-btn btn ">
-              <Link  to='/register'>Register</Link>
-            </button>
+            {
+              user?(<>
+                <h5 className='mb-0'>{user.username}</h5>
+                <button className='btn btn-dark' onClick={logout}>Logout</button>
+              </>
+            ):(
+              <>
+                <Link className="btn-login" to='/login'>
+                  <button className=" secondary-btn btn">
+                    Login
+                  </button>
+                </Link>
+                <Link className="btn-register" to='/register'>
+                  <button className=" primary-btn btn ">
+                    Register
+                  </button>
+                </Link>
+              </>)}  
           </div>
         </div>
       </div>

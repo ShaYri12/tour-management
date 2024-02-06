@@ -29,9 +29,9 @@ const Booking = ({tour, avgRating}) => {
 
   return (
     <div className='booking'>
-      <div className='booking-top d-flex align-items-center justify-content-between'>
+      <div className='booking-top d-flex flex-column flex-sm-row align-item-xs-center align-items-left justify-content-between'>
         <h3>${price} <span>/per person</span></h3>
-        <span className='tour-rating d-flex align-item-center gap-1'>
+        <span className='tour-rating my-auto d-flex align-item-center gap-1'>
           <i className="ri-star-fill"></i>
             {avgRating == 0 ? null : avgRating}( {reviews?.length} )
         </span>

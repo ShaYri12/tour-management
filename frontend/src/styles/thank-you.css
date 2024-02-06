@@ -8,3 +8,17 @@
     font-size: 3.6rem;
     font-family: var(--subtitle-font-name);
 }
+
+@media (max-width: 576px) {
+    .back-btn
+    {
+      width: 50% !important;
+    }
+  }
+
+@media (max-width: 253px) {
+    .back-btn
+    {
+      width: 70% !important;
+    }
+  }

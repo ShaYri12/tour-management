@@ -24,3 +24,30 @@
     color: var(--secondary-color) !important;
 }
 
+.btn-register .primary-btn{
+    color: #fff;
+    font-size: 1.1rem;
+    text-decoration: none;
+}
+
+
+.btn-register .primary-btn:hover{
+    color:inherit;
+}
+
+.btn-login .secondary-btn{
+    background-color: transparent !important;
+    color: #0b2727 !important;
+    border: none !important;
+    font-weight: 500 !important;
+}
+
+.btn-login .secondary-btn{
+    font-size: 1.1rem;
+    text-decoration: none;
+    color: var(--heading-color);
+}
+
+.btn-login .secondary-btn:hover{
+    color: inherit;
+}

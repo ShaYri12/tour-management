@@ -31,9 +31,6 @@
 }
 
 .tour-extra-details{
-    display: flex;
-    align-items: center;
-    column-gap: 2.7rem;
     margin-top: 1rem;
     margin-bottom: 2.5rem;
 }
@@ -136,3 +133,31 @@
 .review-item span{
     font-weight: 500;
 }
+
+@media (max-width: 1200px) {
+    .gap-md-5
+  {
+      gap: 2.2rem !important;
+    }
+}
+
+@media (max-width: 1200px) {
+    .gap-md-5
+  {
+      gap: 0.5rem !important;
+    }
+}
+
+@media (max-width: 1200px) {
+    .gap-md-5
+  {
+      gap: 2.3rem !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .gap-md-5
+  {
+      gap: 0.5rem !important;
+    }
+  }

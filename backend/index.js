@@ -37,7 +37,7 @@ const connect = async () => {
 app.use(express.json())
 app.use(cors(corsOption))
 app.use(cookieParser())
-app.use('/api/auth', authRoute)
+app.use('/auth', authRoute)
 app.use('/api/tours', tourRoute)
 app.use('/api/users', userRoute)
 app.use('/api/review', reviewRoute)
