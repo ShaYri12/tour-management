@@ -40,14 +40,14 @@ const Login = () => {
 
       const result = await res.json()
 
-      if(!res.ok) alert(result.message)
-      else{
-      console.log(result.data)
+      if(!res.ok){
+        return alert(result.message)
+      }
       
       dispatch({type:'LOGIN_SUCCESS', payload:result.data});
       alert("Login Successful!");
       navigate("/home");
-    }
+      
     }catch (error){
       dispatch({type:'LOGIN_FAILURE', payload:error.message})
     }

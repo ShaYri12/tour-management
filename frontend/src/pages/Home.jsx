@@ -150,8 +150,8 @@ const Home = () => {
     {/* ================ Gallery-Section-End ================ */}
 
     {/* ================ Testimonial-Section-Start ================ */}
-    <section>
-      <div className='container'>
+    <section >
+      <div className='container' >
         <div className='row'>
           <div className='col-lg-12'>
             <Subtitle subtitle={"Fans Love"}/>

@@ -13,7 +13,7 @@ const Register = () => {
   },[]);
 
   const [credentials, setCredentials] = useState({
-    userName:undefined,
+    username:undefined,
     email:undefined,
     password:undefined
   });
@@ -39,11 +39,11 @@ const Register = () => {
       const result = await res.json()
       
       if(!res.ok) {
-        alert(result.message)
-      }else{
-        dispatch({type:'REGISTER_SUCCESS'})
-        navigate("/login");
-    }
+        return alert(result.message)
+      }
+      
+      dispatch({type:'REGISTER_SUCCESS'})
+      navigate("/login");
 
     }catch (error){
       console.log(error.message)
@@ -68,7 +68,7 @@ const Register = () => {
 
                 <form onSubmit={handleClick}>
                   <div className='form-group mb-3'> 
-                    <input type="text" placeholder='Username' required id="userName" onChange={handleChange}/>
+                    <input type="text" placeholder='Username' required id="username" onChange={handleChange}/>
                   </div>
                   <div className='form-group mb-3'> 
                     <input type="email" placeholder='Email' required id="email" onChange={handleChange}/>

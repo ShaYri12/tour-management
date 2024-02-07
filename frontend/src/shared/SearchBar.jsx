@@ -13,7 +13,9 @@ const SearchBar = () => {
         const location = locationRef.current.value;
         const distance = distanceRef.current.value;
         const maxGroupSize = maxGroupSizeRef.current.value;
-      
+        if(location === '' && distance ==='' && maxGroupSize ===''){
+            alert("All Fields Are Empty")
+        }
         // Build the query parameters based on non-empty values
         const queryParams = {};
         if (location !== '') queryParams.city = location;
@@ -37,13 +39,13 @@ const SearchBar = () => {
   return (
     
     <div className="col-12 col-lg-6">
-        <div className="search-bar">
-            <form className="form d-flex flex-shrink flex-lg-row flex-column align-item-center gap-4 ">
+        <div className="search-bar ">
+            <form className="d-flex align-item-center gap-4 flex-wrap">
                 <div className="form-group d-flex gap-3 form-group-fast">
                     <span>
                         <i className="ri-map-pin-line"></i>
                     </span>
-                    <div>
+                    <div className='w-100'>
                         <h6>Location</h6>
                         <input type="text" placeholder="Where are you going?" ref={locationRef}/>            
                     </div>
@@ -52,7 +54,7 @@ const SearchBar = () => {
                     <span>
                         <i className="ri-map-pin-time-line"></i>
                     </span>
-                    <div>
+                    <div className='w-100'>
                         <h6>Distance</h6>
                         <input type="number" placeholder="Distance k/m" ref={distanceRef}/>            
                     </div>
@@ -61,14 +63,16 @@ const SearchBar = () => {
                     <span>
                         <i className="ri-group-line"></i>
                     </span>
-                    <div>
+                    <div className='w-100'>
                         <h6>Max People</h6>
                         <input type="number" placeholder="0" ref={maxGroupSizeRef} />            
                     </div>
                 </div>
-                <span className="search-icon my-auto" type="submit" onClick={searchHandler}>
-                <i className="ri-search-line"></i>
-                </span>                
+                
+                <span className="search-icon my-auto flex-grow-1"type="submit" onClick={searchHandler}>
+                <i className="ri-search-line align-items-center justify-content-center d-flex flex-grow-1"></i>
+                </span>
+                
             </form>
         </div>
     </div>

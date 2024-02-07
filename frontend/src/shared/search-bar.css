@@ -1,7 +1,7 @@
 .search-bar{
     padding: 0.5rem 1rem;
     border-radius: 50px;
-    box-shadow: rgba(17,12,46, 0.15) 0px 48px 100px 0px;
+    box-shadow: rgba(17,12,46, 0.2) 0px 48px 100px 0px;
     width:max-content;
     margin-top: 50px;
 }
@@ -37,4 +37,39 @@
     color: #fff;
     border-radius: 10px 5px 10px 5px;
     cursor: pointer;
+}
+
+@media screen and (max-width:992px){
+    .search-bar{  
+        width: 100% !important;
+        border-radius: 2rem;
+    }
+    
+    .search-bar form{
+        flex-wrap: wrap !important;
+    }
+
+    .search-bar form .form-group{
+        width: 48% !important;
+    }
+    .form-group-fast{
+        border-right: 0px solid #ddd;
+    }
+    .form-group{
+        border-right: 2px solid #ddd;
+    }
+    .form-group input{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width:767px){
+
+    .search-bar form .form-group{
+        width: 100% !important;
+    }
+    .form-group input{
+        width: 100%;
+    }
+
 }

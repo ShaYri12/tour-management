@@ -11,14 +11,19 @@ import Booking from '../component/Booking/Booking'
 import Newsletter from '../shared/Newsletter'
 
 const TourDetails = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  });
-
   const {id} = useParams();
   const reviewMsgRef = useRef('')
   const [tourRating, setTourRating]= useState(null)
   const {user} = useContext(AuthContext)
+  
+  useEffect(() => {
+    const scrollToTop = () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    // Delay scroll to ensure that the component has rendered
+    const timeoutId = setTimeout(scrollToTop, 100);
+    return () => clearTimeout(timeoutId);
+  }, [id]);
 
   //fetch data from database
   const {data: tour, loading, error} = useFetch(`${BASE_URL}/tours/${id}`)
@@ -58,7 +63,9 @@ const TourDetails = () => {
       })
       
       const result = await res.json()
-      if(!res.ok) alert(result.message)
+      if(!res.ok){
+        return alert(result.message)
+      }
 
       alert(result.message)
     }catch(err){
@@ -138,14 +145,14 @@ const TourDetails = () => {
           </form>
 
           <div className='form-group-reviews'>
-          {reviews?.map(review =>(
-            <div className='review-item'>
+          {reviews?.map((review,index) =>(
+            <div className='review-item mt-4' key={index}>
               <img src={avatar} alt="" />
               <div className='w-100'>
                 <div className='d-flex align-items-center justify-content-between'>
                   <div>
-                    <h5>review.username</h5>
-                    <p>{new Date("01-10-2023").toLocaleDateString('en-US', options)}</p>
+                    <h5>{review.username}</h5>
+                    <p className="mb-1">{new Date(review.createdAt).toLocaleDateString('en-US', options)}</p>
                   </div>
                   <span className='d-flex align-items-center'>
                     {review.rating}<i className='ri-star-s-fill'></i>
@@ -162,7 +169,7 @@ const TourDetails = () => {
 
         {/* ============== Tour-Reviews-Section-End ============== */}
           <div className="col-lg-4">
-            <Booking tour={tour} avgRating={avgRating}/>
+            <Booking tour={tour} avgRating={avgRating} title={title}/>
           </div>
         </div>
       }
