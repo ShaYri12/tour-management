@@ -28,9 +28,6 @@ const Booking = ({tour, avgRating}) => {
 
   const handleClick = async e =>{
     e.preventDefault();
-
-    
-
     try {
       if(!user || user == undefined || user == null){
         return alert('Please Sign-In')
@@ -44,7 +41,7 @@ const Booking = ({tour, avgRating}) => {
         credentials:'include',
         body:JSON.stringify(booking),
       })
-
+      
       const result = await res.json()
 
       if(!res.ok){
