@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from 'react'
 import { NavLink, Link, useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 import './header.css'
 import { AuthContext } from '../../context/AuthContext'
 
@@ -42,6 +43,7 @@ const Header = () => {
 
   const logout = () =>{
     dispatch({type:'LOGOUT'})
+    toast.success('Logout Successfully!')
     navigate('/')
   }
 
@@ -71,7 +73,7 @@ const Header = () => {
           <div className="nav-btns d-flex align-items-center flex-lg-row flex-column justify-content-center gap-2 gap-md-4 mt-lg-0 mt-md-3">
             {
               user?(<>
-                <h5 className='mb-0'>{user.username}</h5>
+                <Link to="/my-account" className='my-profile'><h5 className='mb-0'>{user.username}</h5> </Link>
                 <button className='btn btn-dark' onClick={logout}>Logout</button>
               </>
             ):(

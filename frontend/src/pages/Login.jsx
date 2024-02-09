@@ -1,6 +1,6 @@
 import React,{useState, useEffect, useContext} from 'react'
 import '../styles/login.css';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link, useNavigate, Navigate} from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import {BASE_URL} from './../utils/config'
 import { toast } from 'react-toastify';
@@ -18,7 +18,7 @@ const Login = () => {
     password:undefined
   });
 
-  const { dispatch } = useContext(AuthContext)
+  const { dispatch, role } = useContext(AuthContext)
   const navigate = useNavigate();
   
   const handleChange= e =>{
@@ -45,9 +45,19 @@ const Login = () => {
         return toast.error(result.message)
       }
       
-      dispatch({type:'LOGIN_SUCCESS', payload:result.data});
-      toast.success("Login Successful!");
-      navigate("/home");
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: {
+          user: result.data,
+          token: result.token,
+          role: result.role,
+        },
+      });
+      toast.success(result.message);
+
+      {
+        role === "admin" ? <Navigate to="/dashboard"/> : navigate("/");
+      }
       
     }catch (error){
       dispatch({type:'LOGIN_FAILURE', payload:error.message}) 

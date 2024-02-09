@@ -51,3 +51,7 @@
 .btn-login .secondary-btn:hover{
     color: inherit;
 }
+
+.my-profile h5:hover{
+    color: var(--secondary-color) !important
+}

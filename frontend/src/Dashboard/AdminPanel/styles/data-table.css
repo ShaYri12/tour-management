@@ -1,0 +1,21 @@
+table{
+    border-radius: 20px !important;
+
+}
+tr{
+    border-bottom: 1px solid;
+    
+
+}
+
+.action-icon{
+    color: var(--primary-color) !important;
+    font-size: 20px;
+}
+
+tr th{
+    
+    color: var(--heading-color) !important;
+    background-color: var(--primary-color) !important
+
+}
