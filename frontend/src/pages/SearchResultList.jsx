@@ -5,6 +5,7 @@ import TourCard from '../shared/TourCard';
 import Newsletter from '../shared/Newsletter';
 import SearchBar from '../shared/SearchBar';
 
+
 const SearchResultList = () => {
   const location = useLocation();
   const [data, setData] = useState([]);

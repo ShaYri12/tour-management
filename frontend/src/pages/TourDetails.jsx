@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import {BASE_URL} from './../utils/config'
 import useFetch from '../hooks/useFetch';
 import {AuthContext} from './../context/AuthContext'
-
+import { toast } from "react-toastify";
 import calculateAvgRating from '../utils/avgRating';
 import avatar from '../assets/images/avatar.jpg';
 import Booking from '../component/Booking/Booking'
@@ -45,7 +45,7 @@ const TourDetails = () => {
     
     try{
       if(!user || user===undefined || user ===null){
-        alert('Please Sign-In')
+        toast.error('Please Sign-In')
       }
       const reviewObj = {
         username: user?.username,
@@ -64,12 +64,12 @@ const TourDetails = () => {
       
       const result = await res.json()
       if(!res.ok){
-        return alert(result.message)
+        return toast.error(result.message)
       }
 
-      alert(result.message)
+      toast.success(result.message)
     }catch(err){
-      alert(err.message)
+      toast.error(err.message)
     }
   }
 

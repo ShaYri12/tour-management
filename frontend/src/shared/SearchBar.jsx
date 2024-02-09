@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import './search-bar.css'
 import { BASE_URL } from '../utils/config';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const SearchBar = () => {
     const locationRef= useRef('');
@@ -14,8 +15,9 @@ const SearchBar = () => {
         const distance = distanceRef.current.value;
         const maxGroupSize = maxGroupSizeRef.current.value;
         if(location === '' && distance ==='' && maxGroupSize ===''){
-            alert("All Fields Are Empty")
+            toast.error("All Fields Are Empty")
         }
+        
         // Build the query parameters based on non-empty values
         const queryParams = {};
         if (location !== '') queryParams.city = location;
@@ -26,7 +28,7 @@ const SearchBar = () => {
       
         const res = await fetch(`${BASE_URL}/tours/search/getTourBySearch?${queryString}`);
       
-        if (!res.ok) alert('Something went wrong');
+        if (!res.ok) toast.error('Something went wrong');
       
         const result = await res.json();
       
