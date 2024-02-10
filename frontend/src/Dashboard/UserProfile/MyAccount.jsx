@@ -30,8 +30,8 @@ const MyAccount = () => {
   };
 
   return (
-    <div className='container my-5'>
-      <div className='row shadow-lg'>
+    <div className='container  my-5'>
+      <div className='row shadow-lg '>
         <div className='col-md-4 col-12 align-items-center justify-content-start d-flex flex-column mt-5 pt-5 profile '>
           <img src={Avatar} className='profile-pic img-fluid rounded-circle border border-2' />
           <h2 className='mt-3'>User</h2>

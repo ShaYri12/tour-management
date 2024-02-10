@@ -18,10 +18,16 @@
     width: 67px; /* Set the desired collapsed width */
   }
 
-
+.sidebar-behind-space{
+    width: 270px;
+  }
+  
 .sidebar{
     min-height: 100vh;
+    position: fixed;
 }
+
+
 
 .navigation-section .logo{
     width:200px;

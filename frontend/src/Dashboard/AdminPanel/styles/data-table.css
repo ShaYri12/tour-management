@@ -1,3 +1,7 @@
+.data-box{
+    min-height: 100vh;
+}
+
 table{
     border-radius: 20px !important;
 

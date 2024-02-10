@@ -2,7 +2,7 @@ import React from 'react'
 
 const Bookings = () => {
   return (
-    <div className='all-tours container pt-4 mt-5'>
+    <div className='data-box container pt-4 mt-5'>
       <div className='row align-item-center justify-content-center'>
         <h1>Bookings</h1>
         <h5 className='ps-3 pt-2'>All Bookings</h5>

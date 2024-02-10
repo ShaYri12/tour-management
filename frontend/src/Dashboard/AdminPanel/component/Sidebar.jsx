@@ -40,6 +40,8 @@ const Sidebar = () => {
     navigate('/')
   }
   return (
+    <>
+    <div className={`${isCollapsed ? ' d-none' :'sidebar-behind-space d-block'}`}></div>
     <div className={`d-flex flex-column  text-bg-dark align-item-between h-100 sidebar wrapper ${isCollapsed ? 'collapsed p-1' : 'p-3'}`}>
       <div className='navigation-section'>
       
@@ -100,6 +102,7 @@ const Sidebar = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
