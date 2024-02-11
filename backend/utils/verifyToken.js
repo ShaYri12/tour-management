@@ -6,7 +6,7 @@ const verifyToken = (req, res, next)=>{
     if(!token){
         return res.status(401).json({
             success: false,
-            message: "You're not authorized"
+            message: "Token doesn't exist in the cookie You're not authorized"
         })
     }
     
@@ -45,7 +45,7 @@ export const verifyAdmin = (req, res, next) =>{
         }else{
             return res.status(401).json({
                 success: false,
-                message: "You're not authorize"
+                message: "You're not authorize (Admin)"
             })
         }
     })

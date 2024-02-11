@@ -1,15 +1,24 @@
 .data-box{
     min-height: 100vh;
+    
+}
+
+.table-box{
+    overflow-x: auto;
+}
+
+body{
+    min-height: 100vh;
 }
 
 table{
     border-radius: 20px !important;
-
+    width: 120%;
 }
+
 tr{
     border-bottom: 1px solid;
     
-
 }
 
 .action-icon{
@@ -22,4 +31,11 @@ tr th{
     color: var(--heading-color) !important;
     background-color: var(--primary-color) !important
 
+}
+
+th, td{
+    white-space: nowrap;
+    overflow: hidden;          
+    text-overflow: ellipsis;
+    vertical-align: middle;
 }

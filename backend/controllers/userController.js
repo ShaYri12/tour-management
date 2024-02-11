@@ -69,7 +69,7 @@ export const getSingleUser = async(req, res) =>{
 export const getAllUser = async(req, res) =>{
 
     try{
-        const users = await User.find({})
+        const users = await User.find({role:'user'})
 
         res.status(200).json({
             success: true,
@@ -85,3 +85,22 @@ export const getAllUser = async(req, res) =>{
         });
     }
 }
+
+//get all Admins
+export const getAllAdmins = async (req, res) => {
+    try {
+        const admins = await User.find({ role: 'admin' });
+
+        res.status(200).json({
+            success: true,
+            count: admins.length,
+            message: "Successfully found Admins",
+            data: admins,
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error",
+        });
+    }
+};

@@ -1,43 +1,74 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Avatar from '../../assets/images/avatar.jpg';
 import './my-account.css';
+import { toast } from 'react-toastify';
+import useFetch from '../../hooks/useFetch';
+import { BASE_URL } from '../../utils/config';
+import { AuthContext } from '../../context/AuthContext';
 
 const MyAccount = () => {
   const [activeTab, setActiveTab] = useState('bookings');
   const [editMode, setEditMode] = useState(false);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState();
+  const [errorMsg, setErrorMsg] = useState();
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
-
+  
   const handleEditModeToggle = () => {
     setEditMode(!editMode);
-    setError('')
+    setErrorMsg('')
   };
   
   const handleSaveProfile = (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
-      // Save profile logic here
-      // You can also perform additional actions if needed
-      setEditMode(false); // Disable edit mode after saving
-      setError(''); // Clear the error state if passwords match
+      
+      setEditMode(false);
+      setErrorMsg('');
     } else {
-      setError("Passwords do not match.");
+      setErrorMsg("Passwords do not match.");
     }
   };
 
+  const { user, dispatch, token } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const deleteAccount = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/users/${user._id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        },
+      });
+      const { message } = await response.json();
+
+      if (!response.ok) {
+        toast.error(message);
+      } else {
+        dispatch({ type: "LOGOUT" });
+        toast.info(message);
+        navigate("/register");
+      }
+    } catch (err) {
+      toast.error("Server not responding");
+    }
+  };
+
+  const {id} = params;
+  const {data: userinfo, loading, error} = useFetch(`${BASE_URL}/users/${id}`);
+  
   return (
-    <div className='container  my-5'>
-      <div className='row shadow-lg '>
-        <div className='col-md-4 col-12 align-items-center justify-content-start d-flex flex-column mt-5 pt-5 profile '>
+    <div className='container  my-5 pt-5'>
+      <div className='row shadow-lg'>
+        <div className='col-md-3 col-12 align-items-center justify-content-start d-flex flex-column mt-5 pt-5 profile '>
           <img src={Avatar} className='profile-pic img-fluid rounded-circle border border-2' />
           <h2 className='mt-3'>User</h2>
           <p>xyz@gmail.com</p>
         </div>
-        <div className='col-md-8 col-12 mt-3'>
+        <div className='col-md-9 col-12 mt-3'>
           <div className='profile-navigation p-3 border border-2'>
             <button
               className={`my-booking-btn btn btn-light border border-3 ${activeTab === 'bookings' ? 'active' : ''}`}
@@ -58,42 +89,42 @@ const MyAccount = () => {
                 <table className="table">
                     <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col" className='text-center'>#</th>
                         <th scope="col">Tour</th>
                         <th scope="col">Person</th>
                         <th scope="col">Price</th>
                         <th scope="col">Booked For</th>
-                        <th scope="col">Action</th>
+                        <th scope="col" className='text-center'>Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <th scope="row">1</th>
+                        <th scope="row" className='text-center'>1</th>
                         <td>Mark</td>
                         <td>Otto</td>
                         <td>Atto</td>
                         <td>@mdo</td>
-                        <td>
+                        <td className='text-center'>
                             <button type="button" className='cancel-btn btn btn-danger'>Cancel booking</button>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">2</th>
+                        <th scope="row" className='text-center'>2</th>
                         <td>Jacob</td>
                         <td>Thornton</td>
                         <td>Thornton</td>
                         <td>@fat</td>
-                        <td>
+                        <td className='text-center'>
                             <button type="button" className='cancel-btn btn btn-danger'>Cancel booking</button>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">3</th>
+                        <th scope="row" className='text-center'>3</th>
                         <td>Larry the Bird</td>
                         <td>@twitter</td>
                         <td>@twitter</td>   
                         <td>@twitter</td>   
-                        <td>
+                        <td className='text-center'>
                             <button type="button" className='cancel-btn btn btn-danger'>Cancel booking</button>
                         </td>
                     </tr>
@@ -166,9 +197,9 @@ const MyAccount = () => {
                     disabled={!editMode}
                   />
                 </div>
-                {editMode && error && (
+                {editMode && errorMsg && (
                     <div className="alert alert-danger mt-3" role="alert">
-                      {error}
+                      {errorMsg}
                     </div>
                   )}
                   <div>
@@ -192,6 +223,7 @@ const MyAccount = () => {
                     </button>
                     )}
                   </div>
+                  <button type="submit" onClick={deleteAccount}>Delete Account</button>
             </form>
             )}
           </div>

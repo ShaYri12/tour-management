@@ -19,9 +19,40 @@
   }
 
 .sidebar-behind-space{
-    width: 270px;
+    width: 275px;
   }
-  
+
+
+.sidebar-collapse-behind-space{
+    width: 68px;
+}
+
+@media screen and (max-width: 1180px) {
+    .sidebar-behind-space{
+        width: 290px;
+    }
+}
+
+
+@media screen and (max-width: 991px) {
+    .sidebar-collapse-behind-space {
+        width: 0px !important;
+    }
+}
+
+@media screen and (max-width: 845px) {
+    .sidebar-collapse-behind-space {
+        width: 40px !important;
+    }
+}
+
+@media screen and (max-width: 805px) {
+    .sidebar-collapse-behind-space {
+        min-width: 64px !important;
+        background-color: aqua;
+    }
+}
+
 .sidebar{
     min-height: 100vh;
     position: fixed;

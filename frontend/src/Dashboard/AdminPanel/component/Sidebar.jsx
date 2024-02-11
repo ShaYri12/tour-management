@@ -16,7 +16,7 @@ const Sidebar = () => {
   useEffect(() => {
     const handleResize = () => {
       // Automatically collapse the sidebar on medium-sized devices (Bootstrap 5 medium breakpoint: 768px)
-      setIsCollapsed(window.innerWidth <= 768);
+      setIsCollapsed(window.innerWidth <= 1000);
     };
 
     // Initial check on mount
@@ -41,7 +41,7 @@ const Sidebar = () => {
   }
   return (
     <>
-    <div className={`${isCollapsed ? ' d-none' :'sidebar-behind-space d-block'}`}></div>
+    <div className={`${isCollapsed ? ' d-block sidebar-collapse-behind-space' :'sidebar-behind-space d-block'}`}></div>
     <div className={`d-flex flex-column  text-bg-dark align-item-between h-100 sidebar wrapper ${isCollapsed ? 'collapsed p-1' : 'p-3'}`}>
       <div className='navigation-section'>
       
@@ -52,7 +52,7 @@ const Sidebar = () => {
           </button>
         </Link>
         <hr/>
-        <ul className={`nav nav-pills flex-column mb-auto ${isCollapsed ? 'collapsed' : ''}`}>
+        <ul className={`nav nav-pills shadow-lg flex-column mb-auto ${isCollapsed ? 'collapsed' : ''}`}>
           <li className="nav-item admin-nav-items">
             <NavLink to="/dashboard" className="nav-link text-white" aria-current="page">
             <i className={`ri-dashboard-line ${isCollapsed ? '' : 'pe-2'}`}></i>
