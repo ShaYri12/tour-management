@@ -1,30 +1,48 @@
 import Booking from '../models/Booking.js'
 
 //create new booking
-export const createBooking = async(req, res) =>{
-    const newBooking = new Booking(req.body)
-    try{
-        const savedBooking = await newBooking.save();
-
-        res.status(200).json({
-            success: true,
-            message: "Your tour is booked",
-            data: savedBooking,
-        })
-    }catch(error)
-    {
-        res.status(500).json({
-            success: false,
-            message: "Internal server error",
-        })
+export const createBooking = async (req, res) => {
+    try {
+      const { userId, userEmail, tourName, fullName, phone, guestSize, bookAt } = req.body;
+  
+      if (!userId || !userEmail || !tourName || !fullName || !phone || !guestSize || !bookAt) {
+        return res.status(400).json({
+          success: false,
+          message: 'Please provide all required fields for booking.',
+        });
+      }
+  
+      const newBooking = new Booking({
+        userId,
+        userEmail,
+        tourName,
+        fullName,
+        phone,
+        guestSize,
+        bookAt,
+      });
+  
+      const savedBooking = await newBooking.save();
+  
+      res.status(200).json({
+        success: true,
+        message: 'Your tour is booked',
+        data: savedBooking,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({
+        success: false,
+        message: 'Internal server error',
+      });
     }
-}
+  };
 
 //get all booking
 export const getAllBooking = async(req, res) =>{
-    
+    const id = req.params.id;
     try{
-        const books = await Booking.find({})
+        const books = await Booking.find({userId: id})
 
         res.status(200).json({
             success: true,
@@ -49,7 +67,7 @@ export const getBooking = async(req, res) =>{
         res.status(200).json({
             success: true,
             message: "Successful",
-            data: savedBooking,
+            data: book,
         })
     }catch(error)
     {
@@ -59,3 +77,31 @@ export const getBooking = async(req, res) =>{
         })
     }
 }
+
+// Delete a booking by ID
+export const deleteBooking = async (req, res) => {
+    try {
+      const bookingId = req.params.id;
+      
+      const deletedBooking = await Booking.findByIdAndDelete(bookingId);
+  
+      if (!deletedBooking) {
+        return res.status(404).json({
+            success: false, 
+            message: 'Booking not found'
+        });
+      }
+  
+      res.status(200).json({
+        success: true,
+        message: 'Booking deleted successfully'
+        });
+
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ 
+        success: false,
+        message: 'Internal Server Error'
+    });
+    }
+  };

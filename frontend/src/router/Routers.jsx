@@ -30,9 +30,9 @@ const Routers = () => {
         
         { /*User Logged In?*/ }
         {user ? (
-          <Route path="/my-account" element={<MyAccount />} />
+          <Route path="/my-account/:id" element={<MyAccount />} />
         ) : (
-          <Route path="/my-account" element={<Navigate to="/login" />} />
+          <Route path="/my-account/:id" element={<Navigate to="/login" />} />
         )}
         <Route path="*" element={<Navigate to='/'/>} />
     </Routes>

@@ -1,9 +1,44 @@
-import React from 'react'
-import useFetch from '../../hooks/useFetch';
+import React, { useEffect, useState } from 'react'
 import { BASE_URL } from '../../utils/config';
+import Avatar from '../../assets/images/avatar.jpg';
+
 
 const Admins = () => {
-  const {data: admins, loading, error} = useFetch(`${BASE_URL}/users/admins`);
+  
+  const useFetch = (url) => {
+    const [data, setData] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+      const fetchData = async () => {
+        setLoading(true);
+
+        try {
+          const res = await fetch(url, {
+            method: "GET",
+            credentials:'include',
+          });
+          if (!res.ok) {
+            throw new Error(`Failed to fetch data from ${url}. Status: ${res.status} - ${res.statusText}`);
+          }
+          
+          const result = await res.json();
+          setData(result.data);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchData();
+    }, [url]);
+
+    return { data, loading, error };
+
+  }
+  const {data: admins, loading, error} = useFetch(`${BASE_URL}/users/search/admins`);
 
   return (
     <div className='data-box container pt-4 mt-5'>
@@ -15,6 +50,7 @@ const Admins = () => {
           <thead>
             <tr>
               <th scope="col" className='text-center'>#</th>
+              <th scope="col">Id</th>
               <th scope="col">Profile Pic</th>
               <th scope="col">Username</th>
               <th scope="col">Email</th>
@@ -32,7 +68,8 @@ const Admins = () => {
               admins?.map((admin,index)=>(
             <tr key={admin._id}>
               <th scope="row" className='text-center'>{index+1}</th>
-              <td>{admin.photo}</td>
+              <td>{admin._id}</td>
+              <td><img src={Avatar} className='profileimg img-fluid rounded-circle border border-2' style={{width:'60px'}} alt="profile-img"/></td>
               <td>{admin.username}</td>
               <td>{admin.email}</td>
               <td className='text-center'>

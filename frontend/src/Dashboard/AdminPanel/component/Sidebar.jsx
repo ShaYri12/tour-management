@@ -94,7 +94,7 @@ const Sidebar = () => {
             <strong>{isCollapsed ? '' : 'mdo'}</strong>
           </NavLink>
           <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
-            <li><Link className="dropdown-item" to="/my-account">Profile</Link></li>
+            <li><Link className="dropdown-item" to={`/my-account/${user._id}`}>Profile</Link></li>
             <li><hr className="dropdown-divider"/></li>
             <li><Link className="dropdown-item" onClick={logout}>Sign out</Link></li>
           </ul>

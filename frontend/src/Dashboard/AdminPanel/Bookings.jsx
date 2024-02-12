@@ -1,8 +1,43 @@
-import React from 'react'
-import useFetch from '../../hooks/useFetch';
+import React, { useEffect, useState } from 'react'
 import { BASE_URL } from '../../utils/config';
 
+
 const Bookings = () => {
+  
+  const useFetch = (url) => {
+    const [data, setData] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+      const fetchData = async () => {
+        setLoading(true);
+
+        try {
+          const res = await fetch(url, {
+            method: "GET",
+            credentials:'include',
+          });
+          if (!res.ok) {
+            throw new Error(`Failed to fetch data from ${url}. Status: ${res.status} - ${res.statusText}`);
+          }
+          
+          const result = await res.json();
+          setData(result.data);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchData();
+    }, [url]);
+
+    return { data, loading, error };
+
+  }
+
 const {data: bookings, loading, error} = useFetch(`${BASE_URL}/booking`);
 
   return (
@@ -39,17 +74,17 @@ const {data: bookings, loading, error} = useFetch(`${BASE_URL}/booking`);
               <td>{booking.tourName}</td>
               <td>{booking.fullName}</td>
               <td>{booking.userEmail}</td>
-              <td>{booking.phone}</td>
               <td>{booking.guestSize}</td>
+              <td>{booking.phone}</td>
               <td>{booking.bookAt}</td>
               <td>Pending...</td>
               <td className='text-center'>
                 <button className='btn btn-light' type="button">
-                  <i class="ri-check-line action-icon"></i>
+                  <i className="ri-check-line action-icon"></i>
                   </button>
                    / 
                   <button className='btn btn-light' type="button">
-                    <i class="ri-close-line action-icon"></i>
+                    <i className="ri-close-line action-icon"></i>
                   </button>
                 </td>
             </tr>

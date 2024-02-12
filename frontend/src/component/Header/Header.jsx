@@ -73,7 +73,7 @@ const Header = () => {
           <div className="nav-btns d-flex align-items-center flex-lg-row flex-column justify-content-center gap-2 gap-md-4 mt-lg-0 mt-md-3">
             {
               user?(<>
-                <Link to="/my-account" className='my-profile'><h5 className='mb-0'>{user.username}</h5> </Link>
+                <Link to={`/my-account/${user._id}`} className='my-profile'><h5 className='mb-0'>{user.username}</h5> </Link>
                 <button className='btn btn-dark' onClick={logout}>Logout</button>
               </>
             ):(

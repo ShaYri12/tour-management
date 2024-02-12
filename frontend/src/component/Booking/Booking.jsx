@@ -1,5 +1,6 @@
 import React, {useState, useContext} from 'react'
 import './booking.css';
+import { toast } from 'react-toastify';
 import {useNavigate} from 'react-router-dom';
 import {BASE_URL} from '../../utils/config'
 import {AuthContext} from '../../context/AuthContext'
@@ -33,24 +34,25 @@ const Booking = ({tour, avgRating}) => {
         return alert('Please Sign-In')
       }
 
-      const res = await fetch(`${BASE_URL}/booking`,{
+      
+      const res = await fetch(`${BASE_URL}/booking`, {
         method: 'post',
-        headers:{
+        headers: {
           'content-type': 'application/json',
         },
-        credentials:'include',
-        body:JSON.stringify(booking),
-      })
-      
-      const result = await res.json()
-
-      if(!res.ok){
-        return alert(result.message)
+        credentials: 'include',
+        body: JSON.stringify(booking),
+      });
+  
+      const result = await res.json();
+  
+      if (!res.ok) {
+        return alert(result.message || 'Booking failed');
       }
-      console.log(booking)  
       navigate('/thank-you');
 
     } catch (error) {
+      console.error(error);
       alert(error.message)
     }
     
@@ -86,16 +88,16 @@ const Booking = ({tour, avgRating}) => {
       {/* ==================== Booking Form Bottom ==================== */}
       <div className='booking-bottom'>
         <div className='list-group'>
-          <div className='list-group-item border-0 px-0'>
-            <h5>${price} <i className='ri-close-line'></i> 1 person</h5>
+          <div className='list-group-item d-flex justify-content-between border-0 px-0'>
+            <h5>Price per person</h5>
             <span> ${price}</span>
           </div>
-          <div className='list-group-item border-0 px-0'>
-            <h5>Service charge <i className='ri-close-line'></i> 1 person</h5>
+          <div className='list-group-item d-flex justify-content-between border-0 px-0'>
+            <h5>Service charge </h5>
             <span> ${serviceFee}</span>
           </div>
-          <div className='list-group-item border-0 px-0'>
-            <h5>Total <i className='ri-close-line'></i> 1 person</h5>
+          <div className='list-group-item d-flex justify-content-between border-0 px-0'>
+            <h5>Total Amount</h5>
             <span> ${totalAmount}</span>
           </div>
         </div>

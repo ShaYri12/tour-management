@@ -1,8 +1,42 @@
-import React from 'react'
-import useFetch from '../../hooks/useFetch';
+import React, { useEffect, useState } from 'react'
 import { BASE_URL } from '../../utils/config';
+import Avatar from '../../assets/images/avatar.jpg';
 
 const Users = () => {
+
+  const useFetch = (url) => {
+    const [data, setData] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+      const fetchData = async () => {
+        setLoading(true);
+
+        try {
+          const res = await fetch(url, {
+            method: "GET",
+            credentials:'include',
+          });
+          if (!res.ok) {
+            throw new Error(`Failed to fetch data from ${url}. Status: ${res.status} - ${res.statusText}`);
+          }
+          
+          const result = await res.json();
+          setData(result.data);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchData();
+    }, [url]);
+
+    return { data, loading, error };
+
+  }
 
 const {data: users, loading, error} = useFetch(`${BASE_URL}/users`);
 
@@ -16,7 +50,7 @@ const {data: users, loading, error} = useFetch(`${BASE_URL}/users`);
           <thead>
             <tr>
               <th scope="col" className='text-center'>#</th>
-              <th scope="col">User ID</th>
+              <th scope="col">Id</th>
               <th scope="col">Profile Pic</th>
               <th scope="col">Username</th>
               <th scope="col">Email</th>
@@ -36,7 +70,7 @@ const {data: users, loading, error} = useFetch(`${BASE_URL}/users`);
             <tr key={user._id}>
               <th scope="row" className='text-center'>{index+1}</th>
               <td>{user._id}</td>
-              <td><img src={user.photo} alt="profile-img"/>{user.photo}</td>
+              <td><img src={Avatar} className='profileimg img-fluid rounded-circle border border-2' style={{width:'60px'}} alt="profile-img"/></td>
               <td>{user.username}</td>
               <td>{user.email}</td>
               <td>3</td>
