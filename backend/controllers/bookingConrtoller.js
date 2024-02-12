@@ -15,10 +15,10 @@ export const createBooking = async (req, res) => {
       const newBooking = new Booking({
         userId,
         userEmail,
-        tourName,
         fullName,
-        phone,
+        tourName,
         guestSize,
+        phone,
         bookAt,
       });
   
@@ -40,9 +40,8 @@ export const createBooking = async (req, res) => {
 
 //get all booking
 export const getAllBooking = async(req, res) =>{
-    const id = req.params.id;
     try{
-        const books = await Booking.find({userId: id})
+        const books = await Booking.find()
 
         res.status(200).json({
             success: true,
@@ -60,9 +59,9 @@ export const getAllBooking = async(req, res) =>{
 
 //get single booking
 export const getBooking = async(req, res) =>{
-    const id = req.params.id;
+    const _id = req.params.id;
     try{
-        const book = await Booking.findById(id)
+        const book = await Booking.find({userId: _id})
 
         res.status(200).json({
             success: true,

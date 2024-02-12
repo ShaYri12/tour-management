@@ -23,6 +23,7 @@ const Bookings = () => {
           }
           
           const result = await res.json();
+
           setData(result.data);
         } catch (err) {
           setError(err.message);

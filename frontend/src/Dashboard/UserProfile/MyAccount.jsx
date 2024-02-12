@@ -5,32 +5,50 @@ import './my-account.css';
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../../utils/config';
 import { AuthContext } from '../../context/AuthContext';
+// import bcrypt from 'bcryptjs';
 
 const MyAccount = () => {
+
   const [activeTab, setActiveTab] = useState('bookings');
   const [editMode, setEditMode] = useState(false);
-
   const [errorMsg, setErrorMsg] = useState();
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
   
   const handleEditModeToggle = () => {
-    setEditMode(!editMode);
-    setErrorMsg('')
-  };
-  
-  const handleSaveProfile = (e) => {
-    e.preventDefault();
-    if (password === confirmPassword) {
-      setPassword(password);
-      setEditMode(false);
+      setEditMode(!editMode);
       setErrorMsg('');
-    } else {
-      setErrorMsg("Passwords do not match.");
     }
-  };
+  
+//   const handleChangePassword = async (e) =>{
+//     e.preventDefault();
+//     try {
+//       if (password !== confirmPassword) {
+//         toast.error("Passwords do not match.");
+//       }
+//       const checkCorrectPassword = await bcrypt.compare(oldPassword, user.password);
 
+//       const response = await fetch(`${BASE_URL}/users/${id}`, {
+//         method: "PUT",
+//         headers: {
+//           "Content-Type": "application/json"
+//         },
+//         credentials: 'include',
+//         body: JSON.stringify({}),
+//       });
+
+//       const { message } = await response.json();
+
+//       if (!response.ok) {
+//         toast.error(message);
+//         return;
+//       }
+
+//   }
+// }
+  
+  
   const navigate = useNavigate();
 
   const useFetch = (url) => {
@@ -72,9 +90,25 @@ const MyAccount = () => {
   const {id} = useParams();
   const {data: userinfo, loading: loading, error: error} = useFetch(`${BASE_URL}/users/${id}`);
 
+  const [userData, setUserData] = useState({
+    username: '',
+    email: '',
+    photo: ''
+  });
+  
+  useEffect(() => {
+    setUserData({ username: userinfo?.username, email: userinfo?.email, photo: userinfo?.photo });
+  }, [userinfo]);
+  
+  const handleChange = e =>{
+    setUserData(prev => ({ ...prev, [e.target.id]: e.target.value }));
+  }
+  
   const {data: userBooking, loading: LoadingBooking, errorBooking} = useFetch(`${BASE_URL}/booking/${id}`);
-  const [password, setPassword] = useState(userinfo.password);
-  const [confirmPassword, setConfirmPassword] = useState(password);
+
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   
   const deleteAccount = async () => {
     try {
@@ -99,8 +133,38 @@ const MyAccount = () => {
     }
   };
 
+  const handleSaveProfile = async (e) => {
+    e.preventDefault();
+    setEditMode(!editMode);
+    try {
+      const response = await fetch(`${BASE_URL}/users/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: 'include',
+        body: JSON.stringify(userData),
+      });
+
+      const { message } = await response.json();
+
+      if (!response.ok) {
+        toast.error(message);
+        return;
+      }
+
+      setEditMode(false);
+      setErrorMsg('');
+      toast.success("Profile updated successfully.");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    } catch (err) {
+      toast.error("Error updating profile.");
+      console.error(err);
+    }
+  };
  
-  
   return (
     <div className='container  my-5 pt-5'>
       <div className='row shadow-lg'>
@@ -113,7 +177,7 @@ const MyAccount = () => {
             error && <span>{error}</span>
           } 
           {
-            !loading && !error && userinfo.username
+            !loading && !error && userData.username
           }</h2>
           <p>
           {
@@ -123,7 +187,7 @@ const MyAccount = () => {
             error && <span>{error}</span>
           } 
           {
-            !loading && !error && userinfo.email
+            !loading && !error && userData.email
           }
           </p>
         </div>
@@ -143,44 +207,60 @@ const MyAccount = () => {
             </button>
           </div>
           <div>
-          <div className='border border-2 p-3 mb-3'>
-            {activeTab === 'bookings' && (
+          <div className='table-box border border-2 p-3 mb-3'>
+            {activeTab === 'bookings' && userBooking.length !== 0 ? (
+            
                 <table className="table">
                     <thead>
                     <tr>
                         <th scope="col" className='text-center'>#</th>
                         <th scope="col">Tour</th>
                         <th scope="col">Person</th>
-                        <th scope="col">Price</th>
+                        <th scope="col">Guest Size</th>
+                        <th scope="col">Phone</th>
                         <th scope="col">Booked At</th>
                         <th scope="col" className='text-center'>Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row" className='text-center'>1</th>
-                        <td>{userBooking?.tourName}</td>
-                        <td>{userBooking?.fullName}</td>
-                        <td>{userBooking?.price}</td>
-                        <td>{userBooking?.bookAt}</td>
+                    {
+                      LoadingBooking && <h4>Loading.......</h4>
+                    }
+                    {
+                      errorBooking && <h4>{errorBooking}</h4>
+                    }
+                    {!LoadingBooking && !errorBooking &&
+                        userBooking?.map((booking,index)=>(
+                    <tr key={booking._id}>
+                        <th scope="row" className='text-center'>{index+1}</th>
+                        <td>{booking?.tourName}</td>
+                        <td>{booking?.fullName}</td>
+                        <td>{booking?.guestSize}</td>
+                        <td>{booking?.phone}</td>
+                        <td>{booking?.bookAt}</td>
                         <td className='text-center'>
                             <button type="button" className='cancel-btn btn btn-danger'>Cancel booking</button>
                         </td>
                     </tr>
+                  ))}
                     </tbody>
                 </table>
-            )}
+            ): activeTab === 'bookings' ? (
+              <h5>No Booking Found</h5>
+          ) : null}
             {activeTab === 'accountSettings' && (
             <form className='account-setting mt-3' onSubmit={handleSaveProfile}>
                 <div className="input-group mb-3">
                   <span className="input-group-text" id="basic-addon1">Username</span>
                   <input
                     type="text"
+                    id="username"
                     className={`form-control ${editMode ? '' : 'readonly'}`}
                     placeholder="Username"
-                    value={loading ? ('loading.......') : error ? {error}: (userinfo.username)}
+                    value={userData.username}
                     aria-label="Username"
                     aria-describedby="basic-addon1"
+                    onChange={handleChange}
                     readOnly={!editMode}
                   />
                 </div>
@@ -188,11 +268,13 @@ const MyAccount = () => {
                   <span className="input-group-text" id="basic-addon1">Email</span>
                   <input
                     type="email"
+                    id="email"
                     className={`form-control ${editMode ? '' : 'readonly'}`}
                     placeholder="Email"
-                    value={loading ? ('loading.......') : error ? {error}: (userinfo.email)}
+                    value={userData.email}
                     aria-label="Email"
                     aria-describedby="basic-addon1"
+                    onChange={handleChange}
                     readOnly={!editMode}
                   />
                 </div>
@@ -205,28 +287,28 @@ const MyAccount = () => {
                 </div>
                 
                 {/* Modal*/}
-                <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                   <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
                       <div className="modal-header">
-                        <h1 className="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                        <h1 className="modal-title fs-5" id="staticBackdropLabel">Change Password</h1>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div className="modal-body">
-                      <form>
+                      
                         <div className="mb-3">
-                          <label for="old-password" className="col-form-label">Old Password</label>
+                          <label htmlFor="old-password" className="col-form-label">Old Password</label>
                           <input type="password" className="form-control" id="oldPassword"/>
                         </div>
                         <div className="mb-3">
-                          <label for="new-password-text" className="col-form-label">New Password</label>
+                          <label htmlFor="new-password-text" className="col-form-label">New Password</label>
                           <input type="password" className="form-control" id="newPassword"/>
                         </div>
                         <div className="mb-3">
-                          <label for="confirm-password" className="col-form-label">Confirm Password</label>
+                          <label htmlFor="confirm-password" className="col-form-label">Confirm Password</label>
                           <input type="password" className="form-control" id="confirmPassword"/>
                         </div>
-                      </form>
+                      
                     </div>
               
                       <div className="modal-footer">
@@ -241,30 +323,30 @@ const MyAccount = () => {
                   <input
                     type="file"
                     className="form-control"
-                    id="inputGroupFile01"
+                    id="inputGroupFile01 photo"
+                    accept=".png, .jpg, .jpeg"
                     disabled={!editMode}
                   />
                 </div>
-                  <div>
-                  {editMode ?(
-                    <button
-                        type="button"
-                        className='edit-profile btn btn-light'
-                        onClick={handleEditModeToggle}
-                        disabled={password !== confirmPassword}
-                    >
-                        <i className="ri-edit-2-line"></i> Save Profile
-                    </button>
-                    ):(
+                  <div className='d-flex'>
+                  
                     <button
                         type="submit"
                         className='edit-profile btn btn-light'
                         onClick={handleEditModeToggle}
-                        
+                        disabled={editMode}
                     >
                         <i className="ri-edit-2-line"></i> Edit Profile
                     </button>
-                    )}
+                    <button
+                        type="submit"
+                        className={`edit-profile btn btn-light ${editMode ? 'd-block':'d-none'}`}
+                        disabled={!editMode}
+                        onClick={handleSaveProfile}
+                    >
+                        <i className="ri-edit-2-line"></i> Save Profile
+                    </button>
+                  
                   </div>
                   <button type="button" className='btn btn-danger mt-5' onClick={deleteAccount}>Delete Account</button>
             </form>

@@ -1,7 +1,8 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect,useState, useContext } from 'react'
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import './header.css'
+import { BASE_URL } from '../../utils/config';
 import { AuthContext } from '../../context/AuthContext'
 
 const Header = () => {
@@ -41,6 +42,43 @@ const Header = () => {
   const navigate = useNavigate();
   const {user, dispatch} = useContext(AuthContext)
 
+  const useFetch = (url) => {
+    const [data, setData] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+      const fetchData = async () => {
+        setLoading(true);
+
+        try {
+          const res = await fetch(url, {
+            method: "GET",
+            credentials:'include',
+          });
+          if (!res.ok) {
+            throw new Error(`Failed to fetch data from ${url}. Status: ${res.status} - ${res.statusText}`);
+          }
+          
+          const result = await res.json();
+          setData(result.data);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchData();
+    }, [url]);
+
+    return { data, loading, error };
+
+  }
+
+  const {data: userinfo, loading, error} = useFetch(`${BASE_URL}/users/${user._id}`);
+
+
   const logout = () =>{
     dispatch({type:'LOGOUT'})
     toast.success('Logout Successfully!')
@@ -73,7 +111,7 @@ const Header = () => {
           <div className="nav-btns d-flex align-items-center flex-lg-row flex-column justify-content-center gap-2 gap-md-4 mt-lg-0 mt-md-3">
             {
               user?(<>
-                <Link to={`/my-account/${user._id}`} className='my-profile'><h5 className='mb-0'>{user.username}</h5> </Link>
+                <Link to={`/my-account/${user._id}`} className='my-profile'><h5 className='mb-0'>{userinfo.username}</h5> </Link>
                 <button className='btn btn-dark' onClick={logout}>Logout</button>
               </>
             ):(
