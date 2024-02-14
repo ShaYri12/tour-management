@@ -4,6 +4,8 @@ import { toast } from 'react-toastify';
 import './header.css'
 import { BASE_URL } from '../../utils/config';
 import { AuthContext } from '../../context/AuthContext'
+import Avatar from '../../assets/images/avatar.jpg';
+
 
 const Header = () => {
   useEffect(() => {
@@ -76,7 +78,7 @@ const Header = () => {
 
   }
 
-  const {data: userinfo, loading, error} = useFetch(`${BASE_URL}/users/${user._id}`);
+  const { data: userinfo, loading, error } = useFetch(user ? `${BASE_URL}/users/${user._id}` : null);
 
 
   const logout = () =>{
@@ -111,7 +113,7 @@ const Header = () => {
           <div className="nav-btns d-flex align-items-center flex-lg-row flex-column justify-content-center gap-2 gap-md-4 mt-lg-0 mt-md-3">
             {
               user?(<>
-                <Link to={`/my-account/${user._id}`} className='my-profile'><h5 className='mb-0'>{userinfo.username}</h5> </Link>
+                <Link to={`/my-account/${userinfo._id}`} className='my-profile'><img src={userinfo.photo || Avatar} className='profileimg img-fluid rounded-circle border border-2' style={{width:'50px', height:'50px', objectFit:'cover'}} alt="profile-img"/> </Link>
                 <button className='btn btn-dark' onClick={logout}>Logout</button>
               </>
             ):(

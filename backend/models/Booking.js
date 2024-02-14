@@ -28,6 +28,10 @@ const bookingSchema = new mongoose.Schema(
         type: Date,
         requierd:true
     },
+    status:{
+        type: String,
+        default:"Pending"
+    },
   },
   { timestamps: true }
 );

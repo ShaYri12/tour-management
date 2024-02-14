@@ -3,18 +3,39 @@ import './styles/data-table.css'
 import useFetch from '../../hooks/useFetch';
 import { BASE_URL } from '../../utils/config';
 import calculateAvgRating from '../../utils/avgRating';
+import useDelete from '../../hooks/useDelete';
+import useUpdate from '../../hooks/useUpdate';
 
 
 const AllTours = () => {
   
   const {data: tours, loading, error} = useFetch(`${BASE_URL}/tours`);
+
+  const handleEdit = (tourId)=>{
+   console.log('Editing') 
+  }
+
+  const handleUpdate = (tourId)=>{
+    useUpdate(`${BASE_URL}/tours/${tourId}`);
+  }
+  
+  const handleDelete = (tourId)=>{
+    useDelete(`${BASE_URL}/tours/${tourId}`);
+  }
   
   
   return (
     <div className='data-box container pt-4 mt-5'>
       <div className='row align-item-center justify-content-center'>
         <h1>Tours</h1>
-        <h5 className='ps-3 pt-2'>All Tours</h5>
+        <div className='d-flex align-item-center justify-content-between'>
+          <div>
+            <h5 className='ps-3 pt-2'>All Tours</h5>
+          </div>
+          <div className='me-3'>
+            <button className='add-tour-btn btn btn-light' onClick={''}>Create Tour</button>
+          </div>
+        </div>
         <div className='col-12 table-box '>
         <table className="table tours-table shadow-lg">
           <thead>
@@ -30,10 +51,10 @@ const AllTours = () => {
           </thead>
           <tbody>  
           {
-            loading && <h4>Loading.......</h4>
+            loading && <tr><td colSpan={7}>Loading.......</td></tr>
           }
           {
-            error && <h4>{error}</h4>
+            error && <tr><td colSpan={7}>{error}</td></tr>
           }
           {!loading && !error &&
               tours?.map((tour,index)=>(
@@ -56,7 +77,7 @@ export default AllTours;
 
 export const AllToursData = ({tour}) => {
   
-  const {title, city, photo, price, featured, reviews} = tour;
+  const {_id, title, city, photo, price, featured, reviews} = tour;
     
   const {totalRating, avgRating} = calculateAvgRating(reviews);
 
@@ -74,11 +95,11 @@ export const AllToursData = ({tour}) => {
               <td>$ {price}</td>
               <td>{featured? ('Yes'):('No')}</td>
               <td className='text-center'>
-                <button className='btn btn-light' type="button">
+                <button className='btn btn-light action-btn' type="button" onClick={()=>handleEdit(_id)}>
                   <i className="ri-edit-box-line action-icon edit-icon"></i>
                   </button>
                    / 
-                  <button className='btn btn-light' type="button">
+                  <button className='btn btn-light action-btn' type="button" onClick={()=>handleDelete(_id)}>
                     <i className="ri-delete-bin-line action-icon delete-icon"></i>
                   </button>
                 </td>

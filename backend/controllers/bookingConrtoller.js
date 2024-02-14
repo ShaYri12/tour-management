@@ -38,25 +38,6 @@ export const createBooking = async (req, res) => {
     }
   };
 
-//get all booking
-export const getAllBooking = async(req, res) =>{
-    try{
-        const books = await Booking.find()
-
-        res.status(200).json({
-            success: true,
-            message: "Successful",
-            data: books,
-        })
-    }catch(error)
-    {
-        res.status(500).json({
-            success: false,
-            message: "Internal server error",
-        })
-    }
-}
-
 //get single booking
 export const getBooking = async(req, res) =>{
     const _id = req.params.id;
@@ -67,6 +48,31 @@ export const getBooking = async(req, res) =>{
             success: true,
             message: "Successful",
             data: book,
+        })
+    }catch(error)
+    {
+        res.status(404).json({
+            success: false,
+            message: "Not found",
+        })
+    }
+}
+
+//update single booking
+export const updateBooking = async(req, res) =>{
+    const _id = req.params.id;
+    const { status } = req.body;
+    try{
+      const updatedBooking = await Booking.findByIdAndUpdate(
+        _id,
+        { status }, // Include the fields you want to update, here assuming 'status'
+        { new: true } // To get the updated document in the response
+      );
+
+        res.status(200).json({
+            success: true,
+            message: "Successfully Updated",
+            data: updatedBooking,
         })
     }catch(error)
     {
@@ -104,3 +110,26 @@ export const deleteBooking = async (req, res) => {
     });
     }
   };
+
+  //get booking by status
+export const getAllBooking = async(req, res)=>{
+  try {
+    const status = req.query.status;
+
+    const filter = status ? { status } : {};
+
+    const booking = await Booking.find(filter)
+      .sort({ createdAt: -1 })
+    res.status(200).json({
+      Success: true,
+      message: "Successfully Found Bookings",
+      data: booking,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: "Failed to fetch bookings",
+      error: error.message,
+    });
+  }
+};

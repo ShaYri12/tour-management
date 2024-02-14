@@ -5,48 +5,48 @@ import './my-account.css';
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../../utils/config';
 import { AuthContext } from '../../context/AuthContext';
-// import bcrypt from 'bcryptjs';
+import { Image, Transformation } from 'cloudinary-react';
+
 
 const MyAccount = () => {
 
   const [activeTab, setActiveTab] = useState('bookings');
   const [editMode, setEditMode] = useState(false);
-  const [errorMsg, setErrorMsg] = useState();
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
   
   const handleEditModeToggle = () => {
       setEditMode(!editMode);
-      setErrorMsg('');
     }
+    const handleCancel = async(bookingId) => {
+      try {
+        const response = await fetch(`${BASE_URL}/booking/${bookingId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify({status: 'Cancelled'}),
+        });
   
-//   const handleChangePassword = async (e) =>{
-//     e.preventDefault();
-//     try {
-//       if (password !== confirmPassword) {
-//         toast.error("Passwords do not match.");
-//       }
-//       const checkCorrectPassword = await bcrypt.compare(oldPassword, user.password);
+        const { message } = await response.json();      
+        
+        if (!response.ok) {
+          toast.error(message);
+          return;
+        }
+        toast.info('Successfully Cancelled Booking.');
+        setTimeout(() => {
+          window.location.reload(); // Reload the page after a slight delay
+        }, 1000);
+  
+      } catch (err) {
+        toast.error('Error during Cancellation.');
+        console.error(err);
+      }
+    };
 
-//       const response = await fetch(`${BASE_URL}/users/${id}`, {
-//         method: "PUT",
-//         headers: {
-//           "Content-Type": "application/json"
-//         },
-//         credentials: 'include',
-//         body: JSON.stringify({}),
-//       });
-
-//       const { message } = await response.json();
-
-//       if (!response.ok) {
-//         toast.error(message);
-//         return;
-//       }
-
-//   }
-// }
   
   
   const navigate = useNavigate();
@@ -104,12 +104,49 @@ const MyAccount = () => {
     setUserData(prev => ({ ...prev, [e.target.id]: e.target.value }));
   }
   
+  const handlePasswordChange = e =>{
+    setPassword(prev => ({ ...prev, [e.target.id]: e.target.value }));
+  }
+
   const {data: userBooking, loading: LoadingBooking, errorBooking} = useFetch(`${BASE_URL}/booking/${id}`);
 
-  const [oldPassword, setOldPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  
+  const [password, setPassword] = useState({
+    oldPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  });
+  const handleChangePassword = async (e) =>{
+    e.preventDefault();
+    if (password.oldPassword && password.newPassword && password.confirmPassword) {
+      try{
+      const response = await fetch(`${BASE_URL}/users/${id}/password`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(password),
+      });
+
+      const { message } = await response.json();
+
+      if (!response.ok) {
+        toast.error(message);
+        return;
+      }
+      toast.success(message);
+      dispatch({ type: "LOGOUT" });
+      navigate('/login')
+    }catch(err){
+      console.log(err)
+      toast.error("Internal Sever Error.")
+    }
+    }
+    else{
+    toast.error("All fields are required.")
+  }
+}
+
   const deleteAccount = async () => {
     try {
       const response = await fetch(`${BASE_URL}/users/${id}`, {
@@ -133,10 +170,31 @@ const MyAccount = () => {
     }
   };
 
+  const cloudinaryConfig = {
+    cloudName: 'dazko9ugd',
+    apiKey: '229314452358913',
+    apiSecret: 'a60Y6vKeapSAgxHNtGpOsPhwNGY',
+  };
+
   const handleSaveProfile = async (e) => {
     e.preventDefault();
-    setEditMode(!editMode);
     try {
+      if (userData.photo) {
+        const formData = new FormData();
+        formData.append('file', userData.photo);
+  
+        const cloudinaryResponse = await fetch(
+          `https://api.cloudinary.com/v1_1/${cloudinaryConfig.cloudName}/upload?upload_preset=qsimo6w7`,
+          {
+            method: 'POST',
+            body: formData,
+          }
+        );
+  
+        const cloudinaryData = await cloudinaryResponse.json();
+        userData.photo = cloudinaryData.secure_url;
+      }
+
       const response = await fetch(`${BASE_URL}/users/${id}`, {
         method: "PUT",
         headers: {
@@ -145,31 +203,36 @@ const MyAccount = () => {
         credentials: 'include',
         body: JSON.stringify(userData),
       });
-
+  
       const { message } = await response.json();
-
+  
       if (!response.ok) {
         toast.error(message);
         return;
       }
-
+  
       setEditMode(false);
-      setErrorMsg('');
       toast.success("Profile updated successfully.");
       setTimeout(() => {
         window.location.reload();
-      }, 1500);
+      }, 1000);
     } catch (err) {
       toast.error("Error updating profile.");
       console.error(err);
     }
   };
+  
  
   return (
     <div className='container  my-5 pt-5'>
       <div className='row shadow-lg'>
         <div className='col-md-3 col-12 align-items-center justify-content-start d-flex flex-column mt-5 pt-5 profile '>
-          <img src={Avatar} className='profile-pic img-fluid rounded-circle border border-2' />
+        <img
+          src={userData.photo || Avatar}
+          alt="Profile"
+          className='profile-pic img-fluid rounded-circle border border-2'
+        />
+
           <h2 className='mt-3'>{
             loading && 'loading...'
           }
@@ -237,10 +300,27 @@ const MyAccount = () => {
                         <td>{booking?.fullName}</td>
                         <td>{booking?.guestSize}</td>
                         <td>{booking?.phone}</td>
-                        <td>{booking?.bookAt}</td>
-                        <td className='text-center'>
-                            <button type="button" className='cancel-btn btn btn-danger'>Cancel booking</button>
+                        <td>
+                        {(() => {
+                          const createdAtDate = new Date(booking.createdAt);
+                          const formattedDate = createdAtDate.toDateString();
+                          const options = { hour: "numeric", minute: "numeric", hour12: true };
+                          const time = createdAtDate.toLocaleTimeString("en-US", options);
+                  
+                          return `${formattedDate} - ${time}`;
+                        })()}
                         </td>
+                        <td className='text-center'>
+                        {booking.status === 'Confirmed' ? (
+                          <button type="button" className='cancel-btn btn btn-success' disabled>Booked</button>
+                        ) : (
+                          booking.status === 'Cancelled' ? (
+                            <button type="button" className='cancel-btn btn btn-secondary' disabled>Booking Cancelled </button>
+                          ) : (
+                            <button type="button" className='cancel-btn btn btn-danger' onClick={() => handleCancel(booking?._id)}>Cancel booking</button>
+                          )
+                        )}
+                      </td>                      
                     </tr>
                   ))}
                     </tbody>
@@ -298,22 +378,22 @@ const MyAccount = () => {
                       
                         <div className="mb-3">
                           <label htmlFor="old-password" className="col-form-label">Old Password</label>
-                          <input type="password" className="form-control" id="oldPassword"/>
+                          <input type="password" className="form-control" id="oldPassword" onChange={handlePasswordChange}/>
                         </div>
                         <div className="mb-3">
                           <label htmlFor="new-password-text" className="col-form-label">New Password</label>
-                          <input type="password" className="form-control" id="newPassword"/>
+                          <input type="password" className="form-control" id="newPassword" onChange={handlePasswordChange}/>
                         </div>
                         <div className="mb-3">
                           <label htmlFor="confirm-password" className="col-form-label">Confirm Password</label>
-                          <input type="password" className="form-control" id="confirmPassword"/>
+                          <input type="password" className="form-control" id="confirmPassword" onChange={handlePasswordChange}/>
                         </div>
                       
                     </div>
               
                       <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" className="edit-profile btn btn-light">Save</button>
+                        <button type="button" className="edit-profile btn btn-light" data-bs-dismiss="modal" onClick={handleChangePassword}>Save</button>
                       </div>
                     </div>
                   </div>
@@ -326,6 +406,7 @@ const MyAccount = () => {
                     id="inputGroupFile01 photo"
                     accept=".png, .jpg, .jpeg"
                     disabled={!editMode}
+                    onChange={(e) => setUserData({ ...userData, photo: e.target.files[0] })}
                   />
                 </div>
                   <div className='d-flex'>

@@ -1,4 +1,5 @@
 import User from '../models/User.js'
+import bcrypt from 'bcryptjs';
 
 //update
 export const updateUser = async(req, res) =>{
@@ -103,4 +104,42 @@ export const getAllAdmins = async (req, res) => {
             message: "Internal Server Error",
         });
     }
+};
+
+export const changePassowrd = async(req, res) =>{
+  const { id } = req.params;
+  const { oldPassword, newPassword, confirmPassword } = req.body;
+
+  try {
+    const user = await User.findById(id);
+
+    // Check if old password matches
+    const isPasswordCorrect = await bcrypt.compare(oldPassword, user.password);
+    if (!isPasswordCorrect) {
+      return res.status(400).json({ 
+        success:false,
+        message: 'Old password is incorrect.' });
+    }
+
+    // Check if new password and confirm password match
+    if (newPassword !== confirmPassword) {
+      return res.status(400).json({
+        success: false,
+        message: 'New password and confirm password do not match.' });
+    }
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update the user's password in the database
+    user.password = hashedPassword;
+    await user.save();
+
+    res.status(200).json({ 
+        success: true,
+        message: 'Password updated successfully.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error.' });
+  }
 };

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { BASE_URL } from '../../utils/config';
 import Avatar from '../../assets/images/avatar.jpg';
-
+import updateData from '../../hooks/useUpdate'
+import deleteData from '../../hooks/useDelete'
 
 const Admins = () => {
   
@@ -38,6 +39,15 @@ const Admins = () => {
     return { data, loading, error };
 
   }
+
+  const handleChangeRole = (adminId, value)=>{
+    updateData(`${BASE_URL}/users/${adminId}`,'role', value);
+  }
+  
+  const handleDelete = (adminId)=>{
+    deleteData(`${BASE_URL}/users/${adminId}`);
+  }
+
   const {data: admins, loading, error} = useFetch(`${BASE_URL}/users/search/admins`);
 
   return (
@@ -54,33 +64,40 @@ const Admins = () => {
               <th scope="col">Profile Pic</th>
               <th scope="col">Username</th>
               <th scope="col">Email</th>
+              <th scope="col">Role</th>
               <th scope="col" className='text-center'>Action</th>
             </tr>
           </thead>
           <tbody>
           {
-            loading && <h4>Loading.......</h4>
+            loading && <tr><td colSpan={6}>Loading.......</td></tr>
           }
           {
-            error && <h4>{error}</h4>
+            error && <tr><td colSpan={6}>{error}</td></tr>
           }
           {!loading && !error &&
               admins?.map((admin,index)=>(
             <tr key={admin._id}>
               <th scope="row" className='text-center'>{index+1}</th>
               <td>{admin._id}</td>
-              <td><img src={Avatar} className='profileimg img-fluid rounded-circle border border-2' style={{width:'60px'}} alt="profile-img"/></td>
+              <td><img src={admin.photo || Avatar} className='profileimg img-fluid rounded-circle border border-2' style={{width:'60px', height:'60px', objectFit:'cover'}} alt="profile-img"/></td>
               <td>{admin.username}</td>
               <td>{admin.email}</td>
+              <td>
+              <select
+                  className="form-select"
+                  value={admin.role}
+                  onChange={(e) => handleChangeRole(admin._id, e.target.value)}
+                >
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </td>
               <td className='text-center'>
-                <button className='btn btn-light' type="button">
-                  <i className="ri-edit-box-line action-icon edit-icon"></i>
-                  </button>
-                  /
-                  <button className='btn btn-light' type="button">
-                    <i className="ri-delete-bin-line action-icon delete-icon"></i>
-                  </button>
-                </td>
+                <button className='btn btn-light action-btn' type="button" onClick={()=> handleDelete(admin._id)}>
+                  <i className="ri-delete-bin-line action-icon delete-icon"></i>
+                </button>
+              </td>
             </tr>
           ))}
           </tbody>

@@ -39,3 +39,28 @@ th, td{
     text-overflow: ellipsis;
     vertical-align: middle;
 }
+
+.filter-btn{
+    font-size: 17px;
+}
+
+.filter-btn.active{
+    background-color: var(--primary-color);
+}
+
+.action-btn:hover{
+    background-color: var(--secondary-color);
+}
+
+.action-btn:hover i{
+    color:#fff !important
+}
+
+.action-btn:focus{
+    background-color: var(--primary-color) !important;
+    color:#fff !important
+}
+.action-btn:focus i{
+    background-color: var(--primary-color) !important;
+    color:#fff !important
+}

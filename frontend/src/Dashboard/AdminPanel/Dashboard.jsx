@@ -54,10 +54,10 @@ const Dashboard = () => {
           <h3>Users</h3>
           <h3 className='pt-3'>
           {
-            loadingUsers && <h4>Loading...</h4>
+            loadingUsers && <span>Loading...</span>
           }
           {
-            errorUsers && <h4>{errorUsers}</h4>
+            errorUsers && <span>{errorUsers}</span>
           }
           {
             !loadingUsers && !errorUsers && users.length
@@ -68,10 +68,10 @@ const Dashboard = () => {
           <h3>Bookings</h3>
           <h3 className='pt-3'>
           {
-            loadingBookings && <h4>Loading...</h4>
+            loadingBookings && <span>Loading...</span>
           }
           {
-            errorBookings && <h4>{errorBookings}</h4>
+            errorBookings && <span>{errorBookings}</span>
           }
      
           {
@@ -83,10 +83,10 @@ const Dashboard = () => {
           <h3>Tours</h3>
           <h3 className='pt-3'>
           {
-            loadingTours && <h4>Loading...</h4>
+            loadingTours && <span>Loading...</span>
           }
           {
-            errorTours && <h4>{errorTours}</h4>
+            errorTours && <span>{errorTours}</span>
           }
      
           { 
@@ -98,10 +98,10 @@ const Dashboard = () => {
           <h3>Admins</h3>
           <h3 className='pt-3'>
           {
-            loadingAdmins && <h4>Loading...</h4>
+            loadingAdmins && <span>Loading...</span>
           }
           {
-            errorAdmins && <h4>{errorAdmins}</h4>
+            errorAdmins && <span>{errorAdmins}</span>
           }
           {
             !loadingAdmins && !errorAdmins && admins.length
