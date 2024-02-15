@@ -3,14 +3,11 @@ import './styles/data-table.css'
 import useFetch from '../../hooks/useFetch';
 import { BASE_URL } from '../../utils/config';
 import calculateAvgRating from '../../utils/avgRating';
-import useDelete from '../../hooks/useDelete';
-import useUpdate from '../../hooks/useUpdate';
+import deleteData from '../../hooks/useDelete';
 import { Link } from 'react-router-dom';
 
 
 const AllTours = () => {
-  
-
   const [currentPage, setCurrentPage] = useState(1);
   
   
@@ -21,17 +18,7 @@ const AllTours = () => {
     setCurrentPage(newPage);
   };
 
-  const handleEdit = (tourId)=>{
-   console.log('Editing') 
-  }
-
-  const handleUpdate = (tourId)=>{
-    useUpdate(`${BASE_URL}/tours/${tourId}`);
-  }
   
-  const handleDelete = (tourId)=>{
-    useDelete(`${BASE_URL}/tours/${tourId}`);
-  }
   
   
   return (
@@ -43,7 +30,7 @@ const AllTours = () => {
             <h5 className='ps-3 pt-2'>All Tours</h5>
           </div>
           <div className='me-3'>
-            <Link className='add-tour-btn btn btn-light' to="/createtour"><i class="ri-file-add-line"></i> Create Tour</Link>
+            <Link className='add-tour-btn btn btn-light' to="/createtour"><i className="ri-file-add-line"></i> Create Tour</Link>
           </div>
         </div>
         <div className='col-12 table-box '>
@@ -97,9 +84,14 @@ export default AllTours;
 
 
 export const AllToursData = ({tour}) => {
+
   
   const {_id, title, city, photo, price, featured, reviews} = tour;
-    
+  
+  const handleDelete = (tourId) => {
+    deleteData(`${BASE_URL}/tours/${tourId}`);
+  };
+   
   const {totalRating, avgRating} = calculateAvgRating(reviews);
 
   return (
@@ -120,7 +112,7 @@ export const AllToursData = ({tour}) => {
                   <i className="ri-edit-box-line action-icon edit-icon"></i>
                   </Link>
                    / 
-                  <button className='btn btn-light action-btn' type="button" onClick={()=>handleDelete(_id)}>
+                  <button className='btn btn-light action-btn' type="button" onClick={() => handleDelete(_id)}>
                     <i className="ri-delete-bin-line action-icon delete-icon"></i>
                   </button>
                 </td>
