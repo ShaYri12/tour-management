@@ -31,7 +31,11 @@ export const CreateTour = () => {
 
   const handleCreateTour = async (e) => {
     e.preventDefault();
-    console.log(tourData)
+    if (!tourData.title || !tourData.city || !tourData.price || !tourData.address || !tourData.desc || !tourData.maxGroupSize || !tourData.distance || !tourData.photo) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }else{
+  
     try {
       if (tourData.photo) {
         const formData = new FormData();
@@ -66,11 +70,12 @@ export const CreateTour = () => {
       }
   
       toast.success("Successfully created a new tour.");
-      navigate('./all-tours')
+      navigate('/all-tours')
     } catch (err) {
       toast.error("Error creating tour.");
       console.error(err);
     }
+  }
   };
 
   return (

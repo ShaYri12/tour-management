@@ -55,6 +55,10 @@ console.log(tour.featured)
 
   const handleUpdateTour = async (e) => {
     e.preventDefault();
+    if (!tourData.title || !tourData.city || !tourData.price || !tourData.address || !tourData.desc || !tourData.maxGroupSize || !tourData.distance || !tourData.photo) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
     try {
       if (tourData.photo) {
         const formData = new FormData();
@@ -89,7 +93,7 @@ console.log(tour.featured)
       }
   
       toast.success("Successfully Updated The Tour.");
-      navigate('./all-tours')
+      navigate('/all-tours')
     } catch (err) {
       toast.error("Error updating tour.");
       console.error(err);
