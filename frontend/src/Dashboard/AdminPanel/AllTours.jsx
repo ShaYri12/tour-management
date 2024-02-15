@@ -39,7 +39,8 @@ const AllTours = () => {
             <tr>
               <th scope="col" className='text-center'>#</th>
               <th scope="col">Tour</th>
-              <th scope="col">Location</th>
+              <th scope="col">City</th>
+              <th scope="col">Distance</th>
               <th scope="col">Rating</th>
               <th scope="col">Amount</th>
               <th scope="col">Featured</th>
@@ -86,7 +87,7 @@ export default AllTours;
 export const AllToursData = ({tour}) => {
 
   
-  const {_id, title, city, photo, price, featured, reviews} = tour;
+  const {_id, title, city, photo, price, featured, reviews, distance, address} = tour;
   
   const handleDelete = (tourId) => {
     deleteData(`${BASE_URL}/tours/${tourId}`);
@@ -99,6 +100,8 @@ export const AllToursData = ({tour}) => {
     
               <td><img  className='img-fluid rounded-2' src={photo} style={{width: '100px'}}/> {title}</td>
               <td>{city}</td>
+              <td>{distance} k/m</td>
+              
               <td>
               {avgRating === 0 ? null : avgRating}
                     {totalRating === 0 ? <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Not Rated</span>:(

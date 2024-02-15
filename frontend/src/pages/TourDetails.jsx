@@ -104,7 +104,7 @@ const TourDetails = () => {
                   <span className="mx-0 mx-sm-5 mx-md-0" ><i className='ri-money-dollar-circle-line'></i>${price}/per person</span>
                 </div>
                 <div className="d-flex flex-column flex-sm-row gap-2 gap-md-5 gap-2">
-                  <span><i className='ri-map-pin-time-line flex-column'></i> ${distance} k/m</span>
+                  <span><i className='ri-map-pin-time-line flex-column'></i> {distance} k/m</span>
                   <span  className="mx-0 mx-sm-5 mx-md-0" ><i className='ri-group-line flex-column'></i> {maxGroupSize} people</span>
                 </div>      
               </div>

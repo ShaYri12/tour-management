@@ -1,9 +1,5 @@
 {
     "version": 2,
-    "builds": [{ "src": "server/*", "use": "@vercel/node" }],
-    "routes": [{ "src": "/api/.*", "dest": "backend/index.js" }],
-    "env": {
-      "MONGODB_URI": "mongodb+srv://sharjeelbaloch345:sharjeelbaloch345@cluster0.3q0g6ko.mongodb.net/"
-    }
+    "builds": [{ "src": "index.js", "use": "@vercel/node" }],
+    "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }]
   }
-  
