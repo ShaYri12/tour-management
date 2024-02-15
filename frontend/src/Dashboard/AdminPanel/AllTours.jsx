@@ -5,6 +5,7 @@ import { BASE_URL } from '../../utils/config';
 import calculateAvgRating from '../../utils/avgRating';
 import useDelete from '../../hooks/useDelete';
 import useUpdate from '../../hooks/useUpdate';
+import { Link } from 'react-router-dom';
 
 
 const AllTours = () => {
@@ -33,7 +34,7 @@ const AllTours = () => {
             <h5 className='ps-3 pt-2'>All Tours</h5>
           </div>
           <div className='me-3'>
-            <button className='add-tour-btn btn btn-light' onClick={''}>Create Tour</button>
+            <Link className='add-tour-btn btn btn-light' to="/createtour"><i class="ri-file-add-line"></i> Create Tour</Link>
           </div>
         </div>
         <div className='col-12 table-box '>
@@ -95,9 +96,9 @@ export const AllToursData = ({tour}) => {
               <td>$ {price}</td>
               <td>{featured? ('Yes'):('No')}</td>
               <td className='text-center'>
-                <button className='btn btn-light action-btn' type="button" onClick={()=>handleEdit(_id)}>
+                <Link className='btn btn-light action-btn' to={`/updatetour/${_id}`}>
                   <i className="ri-edit-box-line action-icon edit-icon"></i>
-                  </button>
+                  </Link>
                    / 
                   <button className='btn btn-light action-btn' type="button" onClick={()=>handleDelete(_id)}>
                     <i className="ri-delete-bin-line action-icon delete-icon"></i>

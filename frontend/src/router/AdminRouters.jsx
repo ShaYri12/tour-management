@@ -8,6 +8,8 @@ import Admins from '../Dashboard/AdminPanel/Admins.jsx'
 import AllTours from '../Dashboard/AdminPanel/AllTours.jsx'
 import Users from '../Dashboard/AdminPanel/Users.jsx'
 import Login from '../pages/Login.jsx';
+import { CreateTour } from '../Dashboard/AdminPanel/component/CreateTour.jsx';
+import { UpdateTour } from '../Dashboard/AdminPanel/component/UpdateTour.jsx';
 
 const AdminRouters = () => {
   const { user } = useContext(AuthContext);
@@ -20,8 +22,10 @@ const AdminRouters = () => {
         <Route path="/users" element={<Users />}/>
         <Route path="/admins" element={<Admins />}/>
         <Route path="/login" element={<Login />}/>
+        <Route path="/createtour" element={<CreateTour />}/>
+        <Route path="/updatetour/:id" element={<UpdateTour />}/>
         
-        { /*User Logged In?*/ }
+        { /* User Logged In? */ }
         {user ? (
           <Route path="/my-account/:id" element={<MyAccount />} />
         ) : (

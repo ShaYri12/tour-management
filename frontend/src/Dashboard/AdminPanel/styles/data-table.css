@@ -64,3 +64,12 @@ th, td{
     background-color: var(--primary-color) !important;
     color:#fff !important
 }
+
+.add-tour-btn{
+    background-color: var(--secondary-color);
+}
+
+.add-tour-btn:focus,
+.add-tour-btn:hover{
+    background-color: var(--primary-color) !important;
+}

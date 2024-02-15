@@ -226,7 +226,7 @@ const MyAccount = () => {
   return (
     <div className='container  my-5 pt-5'>
       <div className='row shadow-lg'>
-        <div className='col-md-3 col-12 align-items-center justify-content-start d-flex flex-column mt-5 pt-5 profile '>
+        <div className='col-md-3 col-12 align-items-center justify-content-start d-flex flex-column mt-5 pt-5 profile mb-5'>
         <img
           src={userData.photo || Avatar}
           alt="Profile"
