@@ -20,7 +20,7 @@ export const CreateTour = () => {
   const navigate = useNavigate()
 
   const handleChange = e =>{
-    setTourData(prev => ({ ...prev, [e.target.id]: e.target.value }));
+    setTourData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
   const cloudinaryConfig = {
@@ -31,6 +31,7 @@ export const CreateTour = () => {
 
   const handleCreateTour = async (e) => {
     e.preventDefault();
+    console.log(tourData)
     try {
       if (tourData.photo) {
         const formData = new FormData();
@@ -80,7 +81,7 @@ export const CreateTour = () => {
           <div className='col-12 shadow-lg rounded-2'>
             <h1 className='text-center mb-5 mt-3'>Create A New Tour</h1>
             
-            <form>
+            <form onSubmit={handleCreateTour}>
               <div className="input-fields input-group mb-3">
                 <span className="input-group-text">Tour Title:</span>
                 <input type="text" name="title" className="form-control" placeholder="Title of the tour" onChange={handleChange} />
@@ -116,9 +117,9 @@ export const CreateTour = () => {
                   type="file"
                   className="form-control"
                   name="photo"
-                  id="inputGroupFile01"
+                  id="inputGroupFile01 photo"
                   accept=".png, .jpg, .jpeg"
-                  onChange={handleChange}
+                  onChange={(e) => setTourData({ ...tourData, photo: e.target.files[0] })}
                 />
               </div>
               <div className='justify-content-end d-flex'>

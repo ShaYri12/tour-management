@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './styles/data-table.css'
 import useFetch from '../../hooks/useFetch';
 import { BASE_URL } from '../../utils/config';
@@ -10,7 +10,16 @@ import { Link } from 'react-router-dom';
 
 const AllTours = () => {
   
-  const {data: tours, loading, error} = useFetch(`${BASE_URL}/tours`);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  
+  const {data: tours, loading, error} = useFetch(`${BASE_URL}/tours?page=${currentPage-1}`)
+  const {data: tourCount} = useFetch(`${BASE_URL}/tours/search/getTourCount`)
+  const totalPages = Math.ceil(tourCount / 8);
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
 
   const handleEdit = (tourId)=>{
    console.log('Editing') 
@@ -68,6 +77,17 @@ const AllTours = () => {
         </table>
  
         </div>
+        <div className='pagination d-flex align-items-center justify-content-center mt-2 mb-5 gap-3'>
+              {Array.from({ length: totalPages }, (_, index) => (
+                <button
+                  key={index + 1}
+                  onClick={() => handlePageChange(index + 1)}
+                  className={currentPage === index + 1 ? 'active-page' : ''}
+                >
+                  {index + 1}
+                </button>
+              ))}
+            </div>
       </div>
     </div>
   )

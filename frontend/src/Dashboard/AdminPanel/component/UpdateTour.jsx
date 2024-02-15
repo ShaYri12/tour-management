@@ -1,27 +1,50 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './create-tour.css'
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { BASE_URL } from '../../../utils/config';
+import useFetch from '../../../hooks/useFetch';
 
 export const UpdateTour = () => {
+  
+
+  const {id} = useParams();
+  const{data: tour, loading, error}= useFetch(`${BASE_URL}/tours/${id}`)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    // Check if the tour data has been fetched
+    if (tour) {
+      setTourData({
+        title: tour.title || '',
+        city: tour.city || '',
+        desc: tour.desc || '',
+        address: tour.address || '',
+        price: tour.price || 0,
+        maxGroupSize: tour.maxGroupSize || 1,
+        photo: tour.photo || '',
+        distance: tour.distance || 0,
+        featured: tour.featured || false,
+      });
+    }
+  }, [tour]);
+
   const [tourData, setTourData] = useState({
-    title: '',
-    city: '',
-    desc: '',
-    address: '',
-    price: 0,
-    maxGroupSize: 1,
-    photo: '',
-    distance: 0,
-    featured: false
+    title: tour.title ||'',
+    city: tour.city || '',
+    desc: tour.desc || '',
+    address: tour.address || '',
+    price: tour.price || 0,
+    maxGroupSize: tour.maxGroupSize || 1,
+    photo: tour.photo || '',
+    distance: tour.distance || 0,
+    featured: tour.featured || false
   })
 
-  const navigate = useNavigate()
-  const {id} = useParams();
-
+  
+console.log(tour.featured)
   const handleChange = e =>{
-    setTourData(prev => ({ ...prev, [e.target.id]: e.target.value }));
+    setTourData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
   const cloudinaryConfig = {
@@ -83,29 +106,29 @@ export const UpdateTour = () => {
               <h1 className='text-center mb-5 mt-3'>Create A New Tour</h1>
               <div className="input-fields input-group mb-3">
                 <span className="input-group-text">Tour Title:</span>
-                <input type="text" name="title" className="form-control" placeholder="Title of the tour" onChange={handleChange} />
+                <input type="text" name="title" className="form-control" value={tourData.title} placeholder="Title of the tour" onChange={handleChange} />
                 <span className="input-group-text">City:</span>
-                <input type="text" name="city" className="form-control" placeholder="City of the tour" onChange={handleChange} />
+                <input type="text" name="city" className="form-control" value={tourData.city} placeholder="City of the tour" onChange={handleChange} />
               </div>
               <div className="input-fields input-group mb-3">
                 <span className="input-group-text">Price:</span>
-                <input type="number" name="price" className="form-control" placeholder="Price per person in dollar" onChange={handleChange} />
+                <input type="number" name="price" className="form-control" value={tourData.price} placeholder="Price per person in dollar" onChange={handleChange} />
                 <span className="input-group-text">Max Peoples:</span>
-                <input type="number" name="maxGroupSize" className="form-control" placeholder="Maximum Peoples" onChange={handleChange} />
+                <input type="number" name="maxGroupSize" className="form-control" value={tourData.maxGroupSize} placeholder="Maximum Peoples" onChange={handleChange} />
               </div>
               <div className="input-fields input-group mb-3">
                 <span className="input-group-text">Distance:</span>
-                <input type="number" name="distance" className="form-control" placeholder="Distance in k/m" />
+                <input type="number" name="distance" className="form-control" value={tourData.distance} placeholder="Distance in k/m" onChange={handleChange} />
                 <span className="input-group-text">Address:</span>
-                <input type="text" name="address" className="form-control" placeholder="Address of the tour" onChange={handleChange}/>
+                <input type="text" name="address" className="form-control" value={tourData.address} placeholder="Address of the tour" onChange={handleChange}/>
               </div>
               <div className="input-fields input-group mb-3">
                 <span className="input-group-text">Description:</span>
-                <textarea  rows="5" name="desc" className="form-control" placeholder="Description of the tour" onChange={handleChange} />
+                <textarea  rows="5" name="desc" className="form-control" value={tourData.desc} placeholder="Description of the tour" onChange={handleChange} />
               </div>
               <div className="input-fields input-group mb-3">
                 <span className="input-group-text">Featured:</span>
-                <select name="featured" className='rounded-2' onChange={handleChange} >
+                <select name="featured" className='rounded-2'value={tourData.featured} onChange={handleChange} >
                   <option value="false">&nbsp;No&nbsp;</option>
                   <option value="true">&nbsp;Yes&nbsp;</option>
                 </select>
@@ -118,7 +141,7 @@ export const UpdateTour = () => {
                   name="photo"
                   id="inputGroupFile01"
                   accept=".png, .jpg, .jpeg"
-                  onChange={handleChange}
+                  onChange={(e) => setTourData({ ...tourData, photo: e.target.files[0] })}
                 />
               </div>
               <div className='justify-content-end d-flex'>
