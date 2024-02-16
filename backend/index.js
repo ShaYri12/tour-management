@@ -17,7 +17,7 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT ||  8000
 const corsOption = {
-    origin: "https://tour-management-livid.vercel.app",
+    origin: true,
     credentials: true,
 };
 
