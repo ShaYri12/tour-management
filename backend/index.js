@@ -12,10 +12,13 @@ import bookingRoute from './routes/bookings.js'
 dotenv.config();
 const app = express();
 const port = process.env.PORT ||  8000
-const corsOption ={
-    origin: process.env.ALLOWED_ORIGIN || "https://tour-management-htux.vercel.app",
+const corsOption = {
+    origin: (origin, callback) => {
+        const allowedOrigin = process.env.ALLOWED_ORIGIN || "https://tour-management-htux.vercel.app";
+        callback(null, allowedOrigin);
+    },
     credentials: true,
-}
+};
 
 //testing
 app.get('/',(req,res)=>{
@@ -43,12 +46,7 @@ app.use('/api/users', userRoute)
 app.use('/api/review', reviewRoute)
 app.use('/api/booking', bookingRoute)
 
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something went wrong!');
-  });
 
-  
 app.listen(port,()=>{
     connect();
     console.log(`server listening on port: ${port}`);
