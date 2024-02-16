@@ -5,6 +5,7 @@ import './header.css'
 import { BASE_URL } from '../../utils/config';
 import { AuthContext } from '../../context/AuthContext'
 import Avatar from '../../assets/images/avatar.jpg';
+import Logo from '../../assets/images/logo.png'
 
 
 const Header = () => {
@@ -93,7 +94,7 @@ const Header = () => {
     <nav className="navbar navbar-expand-lg navbar-light fixed-top bg-white shadow-sm">
       <div className="container px-3 d-flex justify-content-between align-items-center">
         <Link className="navbar-brand logo" to="/">
-          <img src="/src/assets/images/logo.png" alt="Logo" className="rounded-pill" />
+          <img src={Logo} alt="Logo" className="rounded-pill" />
         </Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
