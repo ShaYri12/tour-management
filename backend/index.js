@@ -17,10 +17,10 @@ const corsOption ={
     credentials: true,
 }
 
-// //testing
-// app.get('/',(req,res)=>{
-//     res.send("api is working");
-// })
+//testing
+app.get('/',(req,res)=>{
+    res.send("api is working");
+})
 
 mongoose.set("strictQuery", false);
 const connect = async () => {
