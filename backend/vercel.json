@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "builds": [{ "src": "index.js", "use": "@vercel/node" }],
+  "builds": [{ "src": "/index.js", "use": "@vercel/node" }],
   "routes": [
     {
       "src": "/(.*)",
@@ -9,8 +9,7 @@
       "headers": {
         "Access-Control-Allow-Origin": "*"
       },
-      "status": 200,
-      "maxDuration": 20
+      "status": 200
     }
   ]
 }
