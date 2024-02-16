@@ -13,7 +13,8 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT ||  8000
 const corsOption = {
-    origin: true,
+    origin: "https://tour-management-htux.vercel.app",
+    credentials: true,
 };
 
 //testing
@@ -21,7 +22,7 @@ app.get('/',(req,res)=>{
     res.send("api is working");
 })
 
-
+mongoose.set("strictQuery", false);
 const connect = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI);
@@ -31,14 +32,7 @@ const connect = async () => {
     }
 };
 
-app.use('/api/tours/*', (req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://your-frontend-domain.com');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    next();
-  });
-  
+
 //middleware
 app.use(express.json())
 app.use(cors(corsOption))
