@@ -14,7 +14,6 @@ const app = express();
 const port = process.env.PORT ||  8000
 const corsOption = {
     origin: true,
-    credentials: true,
 };
 
 //testing
@@ -22,7 +21,7 @@ app.get('/',(req,res)=>{
     res.send("api is working");
 })
 
-mongoose.set("strictQuery", false);
+
 const connect = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI);
