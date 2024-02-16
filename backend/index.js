@@ -12,16 +12,8 @@ import bookingRoute from './routes/bookings.js'
 dotenv.config();
 const app = express();
 const port = process.env.PORT ||  8000
-
-const allowedOrigins = ["https://tour-management-htux.vercel.app"];
 const corsOption ={
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-          callback(null, true);
-        } else {
-          callback(new Error("Not allowed by CORS"));
-        }
-      },
+    origin: process.env.ALLOWED_ORIGIN || "https://tour-management-htux.vercel.app",
     credentials: true,
 }
 
