@@ -43,7 +43,12 @@ app.use('/api/users', userRoute)
 app.use('/api/review', reviewRoute)
 app.use('/api/booking', bookingRoute)
 
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something went wrong!');
+  });
 
+  
 app.listen(port,()=>{
     connect();
     console.log(`server listening on port: ${port}`);
