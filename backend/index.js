@@ -13,9 +13,10 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT ||  8000
 const corsOption ={
-    origin: true,
+    origin: "https://tour-management-htux.vercel.app",
     credentials: true,
 }
+
 
 //testing
 app.get('/',(req,res)=>{
