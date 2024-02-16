@@ -44,7 +44,7 @@ app.use('/api/review', reviewRoute)
 app.use('/api/booking', bookingRoute)
 
 
-const server = app.listen(port,()=>{
+app.listen(port,()=>{
     connect();
     console.log(`server listening on port: ${port}`);
 })
