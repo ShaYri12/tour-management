@@ -34,7 +34,7 @@ const connect = async () => {
 
 
 //middleware
-app.use(express.json())
+app.use(express.json({limit:"3mb"}))
 app.use(cors(corsOption))
 app.use(cookieParser())
 app.use('/api/auth', authRoute)

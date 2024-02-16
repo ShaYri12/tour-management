@@ -33,7 +33,42 @@ const Sidebar = () => {
 
   const navigate = useNavigate();
   const {user, dispatch} = useContext(AuthContext)
+  
+  const useFetch = (url) => {
+    const [data, setData] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
 
+    useEffect(() => {
+      const fetchData = async () => {
+        setLoading(true);
+
+        try {
+          const res = await fetch(url, {
+            method: "GET",
+            credentials:'include',
+          });
+          if (!res.ok) {
+            throw new Error(`Failed to fetch data from ${url}. Status: ${res.status} - ${res.statusText}`);
+          }
+          
+          const result = await res.json();
+          setData(result.data);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchData();
+    }, [url]);
+
+    return { data, loading, error };
+
+  }
+
+  const { data: userinfo, loading, error } = useFetch(user ? `${BASE_URL}/users/${user._id}` : null);
   const logout = () =>{
     dispatch({type:'LOGOUT'})
     toast.success('Logout Successfully!')
@@ -90,8 +125,8 @@ const Sidebar = () => {
         <hr/>
         <div className="dropdown">
           <NavLink to="#" className="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src={Avatar} alt="" width="32" height="32" className="rounded-circle me-2 ms-1 "/>
-            <strong>{isCollapsed ? '' : 'mdo'}</strong>
+            <img src={userinfo.photo || Avatar} className='profileimg img-fluid rounded-circle border border-2' style={{width:'50px', height:'50px', objectFit:'cover'}} alt="profile-img"/>
+            <strong>{isCollapsed ? '' : userinfo.username}</strong>
           </NavLink>
           <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
             <li><Link className="dropdown-item" to={`/my-account/${user._id}`}>Profile</Link></li>
