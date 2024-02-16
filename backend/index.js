@@ -1,8 +1,12 @@
-import express from "express"
-import dotenv from "dotenv"
-import mongoose from "mongoose"
-import cors from 'cors'
-import cookieParser from "cookie-parser"
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors"); // Import the cors middleware
+const imageRoutes = require("./routes/imageRoute");
+const userRoutes = require("./routes/userRoutes");
+const foodRoutes = require("./routes/foodRoutes");
+const orderRoutes = require("./routes/orderRoutes");
+const cartRoutes = require("./routes/cartRoutes");
+const dotenv = require("dotenv");
 import tourRoute from './routes/tours.js'
 import userRoute from './routes/users.js'
 import authRoute from './routes/auth.js'
@@ -13,7 +17,7 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT ||  8000
 const corsOption = {
-    origin: "https://tour-management-htux.vercel.app",
+    origin: "https://tour-management-livid.vercel.app",
     credentials: true,
 };
 
