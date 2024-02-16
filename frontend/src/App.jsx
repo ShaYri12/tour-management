@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from './context/AuthContext.jsx';
 import Layout from './component/Layout/Layout';
-import './app.css';
+import './App.css'
 import AdminLayout from './component/Layout/AdminLayout';
 import { BASE_URL } from './utils/config.js';
 
