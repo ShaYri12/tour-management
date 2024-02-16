@@ -48,5 +48,3 @@ const server = app.listen(port,()=>{
     connect();
     console.log(`server listening on port: ${port}`);
 })
-
-server.timeout = 240000;
