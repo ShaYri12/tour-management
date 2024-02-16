@@ -17,6 +17,15 @@ const corsOption = {
     credentials: true,
 };
 
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'https://your-frontend-domain.com'); // Replace with your actual frontend domain
+    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    next();
+  });
+  
+
 //testing
 app.get('/',(req,res)=>{
     res.send("api is working");
