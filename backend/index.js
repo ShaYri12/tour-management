@@ -38,6 +38,14 @@ app.use(cors(corsOption))
 app.use(cookieParser())
 app.use('/api/auth', authRoute)
 app.use('/api/tours', tourRoute)
+// Handle preflight requests
+app.options('/api/tours/*', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.status(200).end();
+});
+
 app.use('/api/users', userRoute)
 app.use('/api/review', reviewRoute)
 app.use('/api/booking', bookingRoute)
