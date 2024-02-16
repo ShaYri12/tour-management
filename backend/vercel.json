@@ -10,7 +10,7 @@
         "Access-Control-Allow-Origin": "*"
       },
       "status": 200,
-      "maxDuration": 30
+      "maxDuration": 20
     }
   ]
 }
