@@ -49,8 +49,6 @@ const Login = () => {
         type: "LOGIN_SUCCESS",
         payload: {
           user: result.data,
-          token: result.token,
-          role: result.role,
         },
       });
       toast.success(result.message);

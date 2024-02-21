@@ -2,9 +2,8 @@ import {createContext, useEffect, useReducer} from 'react'
 
 const initial_state = {
     user: localStorage.getItem('user') !== "undefined" ? JSON.parse(localStorage.getItem('user')) : null,
-    token: localStorage.getItem('token') || null,
-    role: localStorage.getItem('role') || null,
-    
+    loading: false,
+    error: null,
 }
 
 export const AuthContext = createContext(initial_state)
@@ -14,29 +13,35 @@ const AuthReducer = (state, action) => {
         case 'LOGIN_START':
           return {
             user: null,
-            role: null,
-            token: null,
+            loading: true,
+            error: null,
           }
         case 'LOGIN_SUCCESS':
           return {
-            user: action.payload.user,
-            role: action.payload.role,
-            token: action.payload.token,
-            
+            user: action.payload,
+            loading: false,
+            error:null,
+          }
+        case 'LOGIN_FAILURE':
+          return {
+            user: null,
+            loading: false,
+            error: action.payload,
           }
         case 'LOGOUT':
           return {
             user: null,
-            role: null,
-            token: null,
+            loading: false,
+            error: null,
             
           }
-          case 'UPDATE_USER':
-            return {
-              role: action.payload.role,
-              user: action.user,
-              token: action.token,
-            };
+        case 'REGISTER_SUCCESS':
+          return {
+            user: null,
+            loading: false,
+            error: null,
+            
+          }
         default:
         return state
     }
@@ -48,16 +53,13 @@ export const AuthContextProvider = ({children}) => {
 
     useEffect(()=>{
     localStorage.setItem('user', JSON.stringify(state.user))
-    localStorage.setItem('token', state.token)
-    localStorage.setItem('role', state.role)
-    }, [state.user, state.role, state.token])
+    }, [state.user])
 
     return (
     <AuthContext.Provider value={{
         user:state.user,
+        loading: state.loading,
         error:state.error,
-        token:state.token,
-        role:state.role,
         dispatch
     }}>
         {children}
