@@ -73,7 +73,6 @@ const Sidebar = () => {
   const logout = () =>{
     dispatch({type:'LOGOUT'})
     toast.success('Logout Successfully!')
-    navigate('/')
   }
   return (
     <>
@@ -130,7 +129,7 @@ const Sidebar = () => {
             <strong className='ms-1'>{isCollapsed ? '' : userinfo.username}</strong>
           </NavLink>
           <ul className="dropdown-menu dropdown-menu-dark text-small shadow">
-            <li><NavLink className="dropdown-item" to={`/my-account/${user._id}`}>Profile</NavLink></li>
+            <li><NavLink className="dropdown-item" to={user ? (`/my-account/${user._id}`):(null)}>Profile</NavLink></li>
             <li><hr className="dropdown-divider"/></li>
             <li><Link className="dropdown-item" onClick={logout}>Sign out</Link></li>
           </ul>

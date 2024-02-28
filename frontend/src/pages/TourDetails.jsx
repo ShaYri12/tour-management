@@ -68,6 +68,9 @@ const TourDetails = () => {
       }
 
       toast.success(result.message)
+      setTimeout(()=>{
+        window.location.reload();
+      },1000)
     }catch(err){
       toast.error(err.message)
     }

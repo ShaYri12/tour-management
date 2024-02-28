@@ -114,7 +114,7 @@ const Header = () => {
           <div className="nav-btns d-flex align-items-center flex-lg-row flex-column justify-content-center gap-2 gap-md-4 mt-lg-0 mt-md-3">
             {
               user?(<>
-                <Link to={`/my-account/${userinfo._id}`} className='my-profile'><img src={userinfo.photo || Avatar} className='profileimg img-fluid rounded-circle border border-2' style={{width:'50px', height:'50px', objectFit:'cover'}} alt="profile-img"/> </Link>
+                <Link to={`/my-account/${userinfo?._id}`} className='my-profile'><img src={userinfo?.photo || Avatar} className='profileimg img-fluid rounded-circle border border-2' style={{width:'50px', height:'50px', objectFit:'cover'}} alt="profile-img"/> </Link>
                 <button className='btn btn-dark' onClick={logout}>Logout</button>
               </>
             ):(

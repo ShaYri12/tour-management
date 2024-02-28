@@ -19,12 +19,13 @@ function App() {
         try {
           const res = await fetch(url, {
             method: "GET",
-            credentials:'include',
+            credentials: 'include',
           });
+
           if (!res.ok) {
             throw new Error(`Failed to fetch data from ${url}. Status: ${res.status} - ${res.statusText}`);
           }
-          
+
           const result = await res.json();
           setData(result.data);
         } catch (err) {
@@ -38,11 +39,18 @@ function App() {
     }, [url]);
 
     return { data, loading, error };
+  };
+  
+  const userId = user?._id || "";
 
+  const { data: userData, loading, error } = useFetch(`${BASE_URL}/users/${userId}`);
+
+  if(loading){
+      return <div className='text-center my-auto d-flex'> Loading........ </div>
   }
-  const {data: userData} = useFetch(`${BASE_URL}/users/${user?._id}`)
   
   return (
+    
     <div>
     {userData?.role  == 'admin' ? (
         <AdminLayout />
