@@ -12,10 +12,10 @@ import bookingRoute from './routes/bookings.js'
 dotenv.config();
 const app = express();
 const port = process.env.PORT ||  8000
-// const corsOption = {
-//     origin: "https://tour-management-htux.vercel.app", //frontend link
-//     credentials: true,
-// };
+const corsOption = {
+    origin: true,
+    credentials: true,
+};
 
 
 //testing
@@ -35,10 +35,7 @@ const connect = async () => {
 
 
 //middleware
-app.use(cors({
-    origin: process.env.FRONTEND_URL, // Set FRONTEND_URL in your .env file
-    credentials: true,
-}));
+app.use(cors(corsOption))
 app.use(express.json())
 app.use(cookieParser())
 app.use('/api/auth', authRoute)

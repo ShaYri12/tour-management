@@ -86,8 +86,7 @@ export const getSingleTour = async(req, res) =>{
 
 //get all tours
 export const getAllTour = async(req, res) =>{
-    res.header("Access-Control-Allow-Origin", "https://tour-management-gray.vercel.app");
-    res.header("Access-Control-Allow-Credentials", true);
+
     const page = parseInt(req.query.page);
     try{
         const tours = await Tour.find({}).populate("reviews").skip(page * 8).limit(8);
