@@ -12,12 +12,15 @@ import bookingRoute from "./routes/bookings.js";
 dotenv.config();
 const app = express();
 // const port = process.env.PORT || 8000;
+
+// List of allowed origins
 const allowedOrigins = [
-  "https://tour-management-htux.vercel.app/",
-  "https://tour-management-backend-smoky.vercel.app/",
+  "https://tour-management-htux.vercel.app",
+  "https://tour-management-backend-smoky.vercel.app",
 ];
 
-const corsOption = {
+// CORS options
+const corsOptions = {
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true); // Allow the request
@@ -28,11 +31,24 @@ const corsOption = {
   credentials: true,
 };
 
-//testing
+// Middleware setup
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(cookieParser());
+
+// Routes setup
+app.use("/api/auth", authRoute);
+app.use("/api/tours", tourRoute);
+app.use("/api/users", userRoute);
+app.use("/api/review", reviewRoute);
+app.use("/api/booking", bookingRoute);
+
+// Test route
 app.get("/", (req, res) => {
-  res.send("api is working");
+  res.send("API is working");
 });
 
+// MongoDB connection
 mongoose.set("strictQuery", false);
 const connect = async () => {
   try {
@@ -43,17 +59,8 @@ const connect = async () => {
   }
 };
 
-//middleware
-app.use(cors(corsOption));
-app.use(express.json());
-app.use(cookieParser());
-app.use("/api/auth", authRoute);
-app.use("/api/tours", tourRoute);
-app.use("/api/users", userRoute);
-app.use("/api/review", reviewRoute);
-app.use("/api/booking", bookingRoute);
-
+// Start server
 app.listen(() => {
   connect();
-  console.log(`server listening on port: `);
+  console.log(`Server listening`);
 });
