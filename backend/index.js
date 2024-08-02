@@ -53,7 +53,7 @@ app.use("/api/users", userRoute);
 app.use("/api/review", reviewRoute);
 app.use("/api/booking", bookingRoute);
 
-app.listen(port, () => {
+app.listen(() => {
   connect();
-  console.log(`server listening on port: ${port}`);
+  console.log(`server listening on port: `);
 });
