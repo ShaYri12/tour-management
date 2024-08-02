@@ -17,7 +17,7 @@ const allowedOrigins = [
   "https://tour-management-htux.vercel.app/",
 ];
 
-const corsOptions = {
+const corsOption = {
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true); // Allow the request
