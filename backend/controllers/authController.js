@@ -58,12 +58,9 @@ export const login = async (req, res) => {
       { expiresIn: "15d" }
     );
 
-    res.cookie("token", token, {
+    //set token in the browser cookies and send the response to the client
+    res.cookie("accessToken", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "none",
-      domain: process.env.DOMAIN, // Use leading dot for subdomains if needed
-      path: "/", // Ensure the path is correct
       expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
     });
 
