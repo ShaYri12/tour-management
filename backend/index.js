@@ -12,14 +12,26 @@ import bookingRoute from "./routes/bookings.js";
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 8000;
+
+const allowedOrigins = [
+  "https://tour-management-htux.vercel.app",
+  "https://tour-management-backend-deploy.vercel.app/",
+];
+
 const corsOption = {
-  origin: "https://tour-management-htux.vercel.app",
+  origin: (origin, callback) => {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
 };
 
 //testing
 app.get("/", (req, res) => {
-  res.send("api is working");
+  res.send("API is working");
 });
 
 mongoose.set("strictQuery", false);
@@ -44,5 +56,5 @@ app.use("/api/booking", bookingRoute);
 
 app.listen(port, () => {
   connect();
-  console.log(`server listening on port: ${port}`);
+  console.log(`Server listening on port: ${port}`);
 });
