@@ -15,6 +15,7 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
   "https://tour-management-htux.vercel.app",
+  "https://tour-management-backend-smoky.vercel.app",
 ];
 
 const corsOption = {
