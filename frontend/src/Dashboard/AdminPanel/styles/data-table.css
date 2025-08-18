@@ -289,7 +289,6 @@ th, td {
     }
     
     .d-flex.justify-content-between {
-        flex-direction: column;
         align-items: center;
         gap: 10px;
     }
