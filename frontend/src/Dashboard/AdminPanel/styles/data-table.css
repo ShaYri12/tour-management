@@ -454,12 +454,11 @@ th, td {
     width: 100%;
 }
 
-.col-12 {
+/* Only apply specific styles to col-12 within data-box to avoid breaking other Bootstrap columns */
+.data-box .col-12 {
     padding-left: 15px;
     padding-right: 15px;
     box-sizing: border-box;
-    width: 100%;
-    max-width: 100%;
 }
 
 /* Sidebar spacing adjustments */

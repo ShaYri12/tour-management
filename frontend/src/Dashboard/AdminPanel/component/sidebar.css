@@ -99,8 +99,12 @@
         font-size: 25px !important;
     }
 
+    .sidebar-collapse-behind-space{
+        min-width: 47px;
+    }
+
     .collapsed {
-        width: 40px;
+        width: 47px;
       }
 
     .collapse-btn{
