@@ -3,17 +3,15 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import tourRoute from "./routes/tours.js";
-import userRoute from "./routes/users.js";
-import authRoute from "./routes/auth.js";
-import reviewRoute from "./routes/reviews.js";
-import bookingRoute from "./routes/bookings.js";
+import tourRoute from "../routes/tours.js";
+import userRoute from "../routes/users.js";
+import authRoute from "../routes/auth.js";
+import reviewRoute from "../routes/reviews.js";
+import bookingRoute from "../routes/bookings.js";
 
 dotenv.config();
 
-const app = express();
-
-// MongoDB connection with connection reuse for serverless
+// MongoDB connection
 mongoose.set("strictQuery", false);
 let isConnected = false;
 
@@ -23,17 +21,16 @@ const connectDB = async () => {
   }
   
   try {
-    const db = await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    isConnected = db.connections[0].readyState;
+    await mongoose.connect(process.env.MONGO_URI);
+    isConnected = true;
     console.log("MongoDB database connected");
   } catch (err) {
     console.log("MongoDB database connection failed", err);
     throw err;
   }
 };
+
+const app = express();
 
 // List of allowed origins
 const allowedOrigins = [
@@ -63,8 +60,7 @@ const corsOptions = {
 
 // Middleware setup
 app.use(cors(corsOptions));
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+app.use(express.json());
 app.use(cookieParser());
 
 // Connect to database before handling requests
@@ -73,12 +69,7 @@ app.use(async (req, res, next) => {
     await connectDB();
     next();
   } catch (error) {
-    console.error('Database connection error:', error);
-    res.status(500).json({ 
-      success: false, 
-      message: "Database connection failed",
-      error: error.message 
-    });
+    res.status(500).json({ success: false, message: "Database connection failed" });
   }
 });
 
@@ -94,8 +85,7 @@ app.get("/", (req, res) => {
   res.json({
     message: "API is working",
     timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development',
-    mongoConnected: isConnected
+    environment: process.env.NODE_ENV || 'development'
   });
 });
 
@@ -110,18 +100,7 @@ app.get("/api/debug", (req, res) => {
       "/api/review",
       "/api/booking"
     ],
-    timestamp: new Date().toISOString(),
-    mongoConnected: isConnected,
-    environment: process.env.NODE_ENV || 'development'
-  });
-});
-
-// Health check route
-app.get("/api/health", (req, res) => {
-  res.json({
-    status: "healthy",
-    timestamp: new Date().toISOString(),
-    mongoConnected: isConnected
+    timestamp: new Date().toISOString()
   });
 });
 
@@ -130,41 +109,16 @@ app.use((req, res) => {
   res.status(404).json({
     success: false,
     message: `Route ${req.originalUrl} not found`,
-    method: req.method,
     availableRoutes: [
-      "GET /",
-      "GET /api/debug",
-      "GET /api/health",
-      "POST /api/auth/register",
-      "POST /api/auth/login",
-      "GET /api/tours",
-      "GET /api/tours/search/getFeaturedTours",
-      "GET /api/tours/search/getTourBySearch",
-      "GET /api/tours/search/getTourCount",
-      "GET /api/users",
-      "GET /api/review",
-      "GET /api/booking"
+      "/",
+      "/api/debug",
+      "/api/auth",
+      "/api/tours",
+      "/api/users", 
+      "/api/review",
+      "/api/booking"
     ]
   });
 });
 
-// Error handling middleware
-app.use((error, req, res, next) => {
-  console.error('Error:', error);
-  res.status(500).json({
-    success: false,
-    message: "Internal server error",
-    error: process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'
-  });
-});
-
-// For local development
-const port = process.env.PORT || 8000;
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
-  });
-}
-
-// Export for Vercel
 export default app;
