@@ -56,8 +56,11 @@ const Login = () => {
       });
       toast.success(result.message);
 
-      {
-        role === "admin" ? <Navigate to="/dashboard"/> : navigate("/");
+      // Navigate based on user role
+      if (result.role === "admin") {
+        navigate("/dashboard");
+      } else {
+        navigate("/");
       }
       
     }catch (error){

@@ -41,6 +41,13 @@ const Sidebar = () => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+      if (!url) {
+        setData([]);
+        setLoading(false);
+        setError(null);
+        return;
+      }
+
       const fetchData = async () => {
         setLoading(true);
 
@@ -69,7 +76,7 @@ const Sidebar = () => {
 
   }
 
-  const { data: userinfo, loading, error } = useFetch(user ? `${BASE_URL}/users/${user._id}` : null);
+  const { data: userinfo, loading, error } = useFetch(user && user._id ? `${BASE_URL}/users/${user._id}` : null);
   const logout = () =>{
     dispatch({type:'LOGOUT'})
     toast.success('Logout Successfully!')

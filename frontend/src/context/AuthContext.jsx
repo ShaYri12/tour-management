@@ -1,7 +1,7 @@
 import {createContext, useEffect, useReducer} from 'react'
 
 const initial_state = {
-    user: localStorage.getItem('user') !== "undefined" ? JSON.parse(localStorage.getItem('user')) : null,
+    user: localStorage.getItem('user') !== "undefined" && localStorage.getItem('user') !== null ? JSON.parse(localStorage.getItem('user')) : null,
     loading: false,
     error: null,
 }
@@ -60,6 +60,7 @@ export const AuthContextProvider = ({children}) => {
         user:state.user,
         loading: state.loading,
         error:state.error,
+        role: state.user?.role,
         dispatch
     }}>
         {children}
