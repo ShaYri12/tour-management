@@ -57,10 +57,10 @@
 }
 
 .nav-link.active i{
-    font-size: 30px !important;
+    font-size: 24px !important;
 }
 .nav-link i{
-    font-size: 25px;
+    font-size: 24px;
 }
 
 .collapse-btn i{
@@ -81,23 +81,15 @@
 
     .admin-nav-items{
         font-size: 10px !important;
-
     }
 
     .admin-nav-items .nav-link{
         padding: 0 7px;
-        width: 80%;
         margin-bottom: 10px;
     }
 
-    .admin-nav-items .nav-link.active{
-        padding: 0 20px 0 5px;
-        width: 80%;
-        
-    }
-
     .nav-link.active i{
-        font-size: 25px !important;
+        font-size: 24px !important;
     }
 
     .sidebar-collapse-behind-space{
