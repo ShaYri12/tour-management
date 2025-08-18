@@ -22,18 +22,19 @@ const AllTours = () => {
   
   
   return (
-    <div className='data-box container pt-4 mt-5'>
+    <div className='data-box container-fluid pt-4 mt-5'>
       <div className='row align-item-center justify-content-center'>
-        <h1>Tours</h1>
-        <div className='d-flex align-item-center justify-content-between'>
-          <div>
-            <h5 className='pt-2'>All Tours</h5>
+        <div className='col-12'>
+          <h1>Tours</h1>
+          <div className='d-flex align-item-center justify-content-between'>
+            <div>
+              <h5 className='pt-2'>All Tours</h5>
+            </div>
+            <div className='d-flex align-items-end mb-1'>
+              <Link className='add-tour-btn btn btn-light' to="/createtour"><i className="ri-file-add-line"></i> Create Tour</Link>
+            </div>
           </div>
-          <div className='d-flex align-items-end mb-1'>
-            <Link className='add-tour-btn btn btn-light' to="/createtour"><i className="ri-file-add-line"></i> Create Tour</Link>
-          </div>
-        </div>
-        <div className='col-12 table-box '>
+          <div className='table-box'>
         <table className="table tours-table shadow">
           <thead>
             <tr>
@@ -62,20 +63,20 @@ const AllTours = () => {
             </tr>
           ))}
           </tbody>
-        </table>
- 
+          </table>
+          </div>
+          <div className='pagination d-flex align-items-center justify-content-center mt-2 mb-5 gap-3'>
+                {Array.from({ length: totalPages }, (_, index) => (
+                  <button
+                    key={index + 1}
+                    onClick={() => handlePageChange(index + 1)}
+                    className={currentPage === index + 1 ? 'active-page' : ''}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
+              </div>
         </div>
-        <div className='pagination d-flex align-items-center justify-content-center mt-2 mb-5 gap-3'>
-              {Array.from({ length: totalPages }, (_, index) => (
-                <button
-                  key={index + 1}
-                  onClick={() => handlePageChange(index + 1)}
-                  className={currentPage === index + 1 ? 'active-page' : ''}
-                >
-                  {index + 1}
-                </button>
-              ))}
-            </div>
       </div>
     </div>
   )

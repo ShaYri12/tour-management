@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import './styles/data-table.css'
 import { BASE_URL } from '../../utils/config';
 import Avatar from '../../assets/images/avatar.jpg';
 import updateData from '../../hooks/useUpdate'
@@ -51,11 +52,12 @@ const Admins = () => {
   const {data: admins, loading, error} = useFetch(`${BASE_URL}/users/search/admins`);
 
   return (
-    <div className='data-box container pt-4 mt-5'>
+    <div className='data-box container-fluid pt-4 mt-5'>
       <div className='row align-item-center justify-content-center'>
-        <h1>Users</h1>
-        <h5 className='ps-3 pt-2'>All Users</h5>
-        <div className='col-12 table-box'>
+        <div className='col-12'>
+          <h1>Users</h1>
+          <h5 className='ps-3 pt-2'>All Users</h5>
+          <div className='table-box'>
         <table className="table tours-table shadow">
           <thead>
             <tr>
@@ -101,7 +103,8 @@ const Admins = () => {
             </tr>
           ))}
           </tbody>
-        </table>
+          </table>
+          </div>
         </div>
       </div>
     </div>
