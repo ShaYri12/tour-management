@@ -19,26 +19,18 @@
   }
 
 .sidebar-behind-space{
-    width: 275px;
+    min-width: 232px;
   }
 
 
 .sidebar-collapse-behind-space{
-    width: 68px;
-}
-
-@media screen and (max-width: 1180px) {
-    .sidebar-behind-space{
-        width: 290px;
-    }
+    min-width: 68px;
 }
 
 .sidebar{
     min-height: 100vh;
     position: fixed;
 }
-
-
 
 .navigation-section .logo{
     width:200px;
@@ -80,21 +72,6 @@
     background-color: var(--primary-color) !important;
 }
 
-
-@media screen and (max-width: 1180px) {
-    .sidebar-behind-space{
-        width: 290px;
-    }
-    
-}
-
-@media screen and (max-width: 1009px) {
-    .sidebar-behind-space{
-        min-width: 22.3%;
-        display: block;
-    }
-}
-
 @media screen and (max-width: 600px) {
     .sidebar-link,
     .sidebar-link i{
@@ -123,7 +100,7 @@
     }
 
     .collapsed {
-        width: 40px; /* Set the desired collapsed width */
+        width: 40px;
       }
 
     .collapse-btn{
@@ -134,9 +111,4 @@
     .collapse-btn i{
         font-size: 20px;
     }
-
-    .sidebar-collapse-behind-space{
-        min-width: 40px !important;
-    }
-    
 }

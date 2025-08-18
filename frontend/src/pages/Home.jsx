@@ -9,7 +9,7 @@ import worldImg from '../assets/images/world.png';
 import experienceImg from '../assets/images/experience.png';
 
 import SearchBar from '../shared/SearchBar';
-import  ServiceList from '../services/ServiceList'
+import ServiceList from '../services/ServiceList'
 import FeatureTourList from '../component/Featured_tours/FeatureTourList'
 import MasonryImagesGallery from '../component/image-gallery/MasonryImageGallery'
 import Testimonials from "../component/Testimonial/Testimonials";
@@ -151,7 +151,7 @@ const Home = () => {
 
     {/* ================ Testimonial-Section-Start ================ */}
     <section >
-      <div className='container' >
+      <div className='container overflow-hidden' >
         <div className='row'>
           <div className='col-lg-12'>
             <Subtitle subtitle={"Fans Love"}/>
