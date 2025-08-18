@@ -46,7 +46,7 @@ const Dashboard = () => {
   const { data: tours, loading: loadingTours, error: errorTours } = useFetch(`${BASE_URL}/tours/search/getTourCount`);
 
   return (
-    <div className='dashboard container pt-4 mt-5'>
+    <div className='dashboard container-fluid pt-4 mt-5'>
       <div className='row align-item-center justify-content-center'>
         <h1>Dashboard</h1>
         <h5 className='ps-3 pt-2'>General Report</h5>
@@ -66,7 +66,7 @@ const Dashboard = () => {
         </Link>
         <Link to="/all-bookings" className='general-box mt-5 border border-2 align-items-center justify-content-center d-flex flex-column shadow-xl col-lg-3 col-md-4 col-sm-6'>
           <h3>Bookings</h3>
-          <h3 className='pt-3'>
+          <h3 className='sm:pt-3 pt-1'>
           {
             loadingBookings && <span>Loading...</span>
           }
@@ -81,7 +81,7 @@ const Dashboard = () => {
         </Link>
         <Link to="/all-tours" className='general-box mt-5 border border-2 align-items-center justify-content-center d-flex flex-column shadow-xl col-lg-3 col-md-4 col-sm-6'>
           <h3>Tours</h3>
-          <h3 className='pt-3'>
+          <h3 className='sm:pt-3 pt-1'>
           {
             loadingTours && <span>Loading...</span>
           }
@@ -96,7 +96,7 @@ const Dashboard = () => {
         </Link>
         <Link to="/admins" className='general-box mt-5 border border-2 align-items-center justify-content-center d-flex flex-column shadow-xl col-lg-3 col-md-4 col-sm-6'>
           <h3>Admins</h3>
-          <h3 className='pt-3'>
+          <h3 className='sm:pt-3 pt-1'>
           {
             loadingAdmins && <span>Loading...</span>
           }
