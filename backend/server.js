@@ -10,14 +10,34 @@ import reviewRoute from "./routes/reviews.js";
 import bookingRoute from "./routes/bookings.js";
 
 dotenv.config();
+
+// MongoDB connection
+mongoose.set("strictQuery", false);
+let isConnected = false;
+
+const connectDB = async () => {
+  if (isConnected) {
+    return;
+  }
+  
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    isConnected = true;
+    console.log("MongoDB database connected");
+  } catch (err) {
+    console.log("MongoDB database connection failed", err);
+    throw err;
+  }
+};
+
 const app = express();
-const port = process.env.PORT || 8000;
 
 // List of allowed origins
 const allowedOrigins = [
   process.env.FRONTEND_URL || "https://tour-management-htux.vercel.app",
-  "http://localhost:3000", // For local development
-  "http://localhost:5173", // For Vite dev server
+  "https://tour-management-htux.vercel.app",
+  "http://localhost:3000",
+  "http://localhost:5173",
 ];
 
 // CORS options
@@ -43,6 +63,16 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
+// Connect to database before handling requests
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Database connection failed" });
+  }
+});
+
 // Routes setup
 app.use("/api/auth", authRoute);
 app.use("/api/tours", tourRoute);
@@ -59,7 +89,7 @@ app.get("/", (req, res) => {
   });
 });
 
-// Debug route to check all routes
+// Debug route
 app.get("/api/debug", (req, res) => {
   res.json({
     message: "Debug endpoint working",
@@ -74,26 +104,21 @@ app.get("/api/debug", (req, res) => {
   });
 });
 
-// MongoDB connection
-mongoose.set("strictQuery", false);
-const connect = async () => {
-  try {
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log("MongoDB database connected");
-  } catch (err) {
-    console.log("MongoDB database connection failed", err);
-  }
-};
-
-// MongoDB connection
-connect();
-
-// Start server (for local development)
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: `Route ${req.originalUrl} not found`,
+    availableRoutes: [
+      "/",
+      "/api/debug",
+      "/api/auth",
+      "/api/tours",
+      "/api/users", 
+      "/api/review",
+      "/api/booking"
+    ]
   });
-}
+});
 
-// Export the app for Vercel
 export default app;

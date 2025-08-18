@@ -30,6 +30,15 @@ VITE_API_BASE_URL=https://your-backend-domain.vercel.app/api
    - JWT_SECRET_KEY
    - FRONTEND_URL
    - BACKEND_URL
+   - NODE_ENV=production
+
+### Troubleshooting Backend 404 Errors
+If you're getting 404 errors on your API routes:
+1. Check that your Vercel deployment is using `server.js` as the entry point
+2. Verify environment variables are set in Vercel dashboard
+3. Test the root endpoint: `https://your-backend-url.vercel.app/`
+4. Test the debug endpoint: `https://your-backend-url.vercel.app/api/debug`
+5. Check Vercel function logs for any errors
 
 ### Frontend Deployment
 1. Navigate to the frontend directory
