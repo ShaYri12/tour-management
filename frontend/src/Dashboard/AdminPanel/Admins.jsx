@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import './styles/data-table.css'
 import { BASE_URL } from '../../utils/config';
 import Avatar from '../../assets/images/avatar.jpg';
 import updateData from '../../hooks/useUpdate'
