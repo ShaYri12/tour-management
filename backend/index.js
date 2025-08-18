@@ -11,12 +11,13 @@ import bookingRoute from "./routes/bookings.js";
 
 dotenv.config();
 const app = express();
-// const port = process.env.PORT || 8000;
+const port = process.env.PORT || 8000;
 
 // List of allowed origins
 const allowedOrigins = [
-  "https://tour-management-htux.vercel.app",
-  "https://tour-management-backend-smoky.vercel.app",
+  process.env.FRONTEND_URL || "https://tour-management-htux.vercel.app",
+  "http://localhost:3000", // For local development
+  "http://localhost:5173", // For Vite dev server
 ];
 
 // CORS options
@@ -60,7 +61,7 @@ const connect = async () => {
 };
 
 // Start server
-app.listen(() => {
+app.listen(port, () => {
   connect();
-  console.log(`Server listening`);
+  console.log(`Server listening on port ${port}`);
 });
