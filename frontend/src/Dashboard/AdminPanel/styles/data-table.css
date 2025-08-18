@@ -1,17 +1,16 @@
-/* Container Styles - FIXED TO PREVENT SCREEN OVERFLOW */
+/* Container Styles - FIXED FOR SIDEBAR COMPATIBILITY */
 .data-box {
     min-height: 100vh;
     width: 100%;
-    max-width: 100vw; /* Never exceed viewport width */
-    overflow-x: hidden; /* Prevent container from expanding beyond screen */
+    max-width: 100%;
     box-sizing: border-box;
+    /* Remove overflow-x hidden to allow table scrolling */
 }
 
 .table-box {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     width: 100%;
-    max-width: 100%;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     background: white;
@@ -30,13 +29,14 @@ body {
     box-sizing: border-box;
 }
 
-/* Table Styles - COMPLETELY FIXED WIDTH MANAGEMENT */
+/* Table Styles - FIXED WIDTH FOR PROPER OVERFLOW */
 .tours-table {
     border-radius: 10px !important;
-    width: 100%; /* Always 100% of container */
+    width: 100%;
+    min-width: 1000px; /* FIXED: Set minimum width to trigger overflow */
     margin-bottom: 0;
     border-collapse: collapse;
-    table-layout: fixed; /* Fixed layout for better control */
+    table-layout: auto; /* Allow natural column sizing */
 }
 
 tr {
@@ -63,60 +63,14 @@ th, td {
     vertical-align: middle;
     padding: 10px 8px;
     font-size: 14px;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    white-space: nowrap; /* Prevent text wrapping */
 }
 
-/* Column width distribution for better responsive behavior */
-.tours-table th:first-child,
-.tours-table td:first-child {
-    width: 8%; /* # column */
-    text-align: center;
-}
-
-.tours-table th:nth-child(2),
+/* Specific column handling for text overflow */
 .tours-table td:nth-child(2) {
-    width: 25%; /* Main content column */
-    white-space: nowrap;
+    max-width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.tours-table th:nth-child(3),
-.tours-table td:nth-child(3) {
-    width: 12%; /* Image/City column */
-}
-
-.tours-table th:nth-child(4),
-.tours-table td:nth-child(4) {
-    width: 12%; /* Secondary info */
-}
-
-.tours-table th:nth-child(5),
-.tours-table td:nth-child(5) {
-    width: 15%; /* Email/Rating */
-}
-
-.tours-table th:nth-child(6),
-.tours-table td:nth-child(6) {
-    width: 10%; /* Price/Role */
-}
-
-.tours-table th:nth-child(7),
-.tours-table td:nth-child(7) {
-    width: 8%; /* Status/Featured */
-}
-
-.tours-table th:nth-child(8),
-.tours-table td:nth-child(8) {
-    width: 10%; /* Action column */
-    text-align: center;
-}
-
-.tours-table th:nth-child(9),
-.tours-table td:nth-child(9) {
-    width: 10%; /* Additional column for bookings */
-    text-align: center;
 }
 
 /* Button Styles */
@@ -223,8 +177,12 @@ th, td {
     background: #a8a8a8;
 }
 
-/* Responsive Design - NO MORE MIN-WIDTH ISSUES */
+/* Responsive Design - ADJUSTED FOR SIDEBAR */
 @media screen and (max-width: 1200px) {
+    .tours-table {
+        min-width: 900px; /* Slightly smaller but still triggers overflow */
+    }
+    
     .tours-table th,
     .tours-table td {
         font-size: 13px;
@@ -237,7 +195,12 @@ th, td {
     }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1000px) {
+    /* When sidebar collapses, we have more space */
+    .tours-table {
+        min-width: 800px;
+    }
+    
     .data-box h1 {
         font-size: 1.8rem;
         text-align: center;
@@ -286,18 +249,20 @@ th, td {
 
 @media screen and (max-width: 768px) {
     .data-box {
-        padding: 0 5px; /* Reduced padding */
-        max-width: 100vw;
-        overflow-x: hidden;
+        padding: 0 5px;
     }
     
     .table-box {
-        margin: 0 -5px; /* Extend to screen edges but not beyond */
+        margin: 0 -5px;
         border-radius: 0;
         box-shadow: none;
         border-top: 1px solid #dee2e6;
         border-bottom: 1px solid #dee2e6;
-        max-width: 100vw;
+    }
+    
+    .tours-table {
+        min-width: 700px; /* Still maintain minimum for overflow */
+        border-radius: 0 !important;
     }
     
     .tours-table th,
@@ -339,10 +304,9 @@ th, td {
     }
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 600px) {
     .data-box {
         padding: 0 3px;
-        max-width: 100vw;
     }
     
     .data-box h1 {
@@ -355,7 +319,10 @@ th, td {
     
     .table-box {
         margin: 0 -3px;
-        max-width: 100vw;
+    }
+    
+    .tours-table {
+        min-width: 600px; /* Maintain overflow trigger */
     }
     
     .tours-table th,
@@ -399,12 +366,14 @@ th, td {
 @media screen and (max-width: 480px) {
     .data-box {
         padding: 0 2px;
-        max-width: 100vw;
     }
     
     .table-box {
         margin: 0 -2px;
-        max-width: 100vw;
+    }
+    
+    .tours-table {
+        min-width: 500px; /* Still maintain minimum for overflow */
     }
     
     .tours-table th,
@@ -457,22 +426,44 @@ th, td {
     text-overflow: ellipsis;
 }
 
-/* Ensure Bootstrap containers don't exceed viewport */
-.container-fluid {
-    max-width: 100vw;
+/* Admin Layout Styles - FIXED FOR SIDEBAR */
+.admin-layout {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.main-content {
+    width: 100%;
+    min-width: 0; /* Allow flex item to shrink */
     overflow-x: hidden;
     box-sizing: border-box;
 }
 
-.row {
-    max-width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-}
-
-.col-12 {
-    max-width: 100%;
+/* Bootstrap container adjustments for sidebar layout */
+.container-fluid {
     padding-left: 15px;
     padding-right: 15px;
     box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+}
+
+.col-12 {
+    padding-left: 15px;
+    padding-right: 15px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Sidebar spacing adjustments */
+.sidebar-behind-space,
+.sidebar-collapse-behind-space {
+    flex-shrink: 0; /* Prevent shrinking */
 }
