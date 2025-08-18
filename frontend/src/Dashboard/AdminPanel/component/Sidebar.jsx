@@ -96,31 +96,31 @@ const Sidebar = () => {
         <hr/>
         <ul className="nav nav-pills shadow flex-column mb-auto">
           <li className="nav-item admin-nav-items">
-            <NavLink to="/dashboard" className="nav-link text-white px-md-4 px-2" aria-current="page">
+            <NavLink to="/dashboard" className={`nav-link text-white px-md-3 px-2 ${isCollapsed && 'd-flex justify-content-center' }`} aria-current="page">
             <i className={`ri-dashboard-line ${isCollapsed ? '' : 'pe-2'}`}></i>
               {isCollapsed ? '' : 'Dashboard'}
             </NavLink>
           </li>
           <li className="nav-item admin-nav-items">
-            <NavLink to="/all-tours" className="nav-link text-white">
+            <NavLink to="/all-tours" className={`nav-link text-white px-md-3 px-2 ${isCollapsed && 'd-flex justify-content-center' }`}>
             <i className={`ri-flight-takeoff-line ${isCollapsed ? '' : 'pe-2'}`}></i>
             {isCollapsed ? '' : 'Tours'}  
             </NavLink>
           </li>
           <li className="nav-item admin-nav-items">
-            <NavLink to="/all-bookings" className="nav-link text-white">
+            <NavLink to="/all-bookings" className={`nav-link text-white px-md-3 px-2 ${isCollapsed && 'd-flex justify-content-center' }`}>
             <i className={`ri-calendar-2-fill ${isCollapsed ? '' : 'pe-2'}`}></i>
               {isCollapsed ? '' : 'Bookings'}
             </NavLink>
           </li>
           <li className="nav-item admin-nav-items">
-            <NavLink to="/users" className="nav-link text-white">
+            <NavLink to="/users" className={`nav-link text-white px-md-3 px-2 ${isCollapsed && 'd-flex justify-content-center' }`}>
             <i className={`ri-group-line ${isCollapsed ? '' : 'pe-2'}`}></i>
             {isCollapsed ? '' : 'Users'}
             </NavLink>
           </li>
           <li className="nav-item admin-nav-items">
-            <NavLink to="/admins" className="nav-link text-white">
+            <NavLink to="/admins" className={`nav-link text-white px-md-3 px-2 ${isCollapsed && 'd-flex justify-content-center' }`}>
             <i className={`ri-admin-line ${isCollapsed ? '' : 'pe-2'}`}></i>
               {isCollapsed ? '' : 'Admins'}
             </NavLink>
