@@ -52,7 +52,7 @@ const Dashboard = () => {
         <h5 className='ps-3 pt-2'>General Report</h5>
         <Link to="/users" className='general-box mt-5 border border-2 align-items-center justify-content-center d-flex flex-column shadow-xl col-lg-3 col-md-4 col-sm-6'>
           <h3>Users</h3>
-          <h3 className='pt-3'>
+          <h3 className='sm:pt-3 pt-1'>
           {
             loadingUsers && <span>Loading...</span>
           }
