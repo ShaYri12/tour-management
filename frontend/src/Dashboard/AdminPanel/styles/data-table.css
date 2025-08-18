@@ -1,80 +1,171 @@
-.data-box{
+.data-box {
     min-height: 100vh;
-    
+    padding: 0 15px;
 }
 
-.table-box{
+.table-box {
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: white;
+    margin-bottom: 20px;
+    width: 100%;
 }
 
-body{
+body {
     min-height: 100vh;
 }
 
-table{
-    border-radius: 20px !important;
-    width: 120%;
+.tours-table {
+    border-radius: 10px !important;
+    width: 100%;
+    margin-bottom: 0;
+    border-collapse: collapse;
+    table-layout: fixed; /* Fixed layout for better control */
 }
 
-tr{
-    border-bottom: 1px solid;
-    
+tr {
+    border-bottom: 1px solid #dee2e6;
 }
 
-.action-icon{
+.action-icon {
     color: var(--primary-color) !important;
-    font-size: 20px;
+    font-size: 18px;
 }
 
-tr th{
-    
+tr th {
     color: var(--heading-color) !important;
-    background-color: var(--primary-color) !important
-
+    background-color: var(--primary-color) !important;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 12px 8px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
-th, td{
-    white-space: nowrap;
-    overflow: hidden;          
-    text-overflow: ellipsis;
+th, td {
     vertical-align: middle;
+    padding: 10px 8px;
+    font-size: 14px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
-.filter-btn{
-    font-size: 17px;
+/* Column width distribution for different table types */
+/* For tables with 7 columns (Admins) */
+.tours-table th:first-child,
+.tours-table td:first-child {
+    width: 8%; /* # column */
+    text-align: center;
 }
 
-.filter-btn.active{
+.tours-table th:nth-child(2),
+.tours-table td:nth-child(2) {
+    width: 25%; /* ID column */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tours-table th:nth-child(3),
+.tours-table td:nth-child(3) {
+    width: 12%; /* Profile pic column */
+    text-align: center;
+}
+
+.tours-table th:nth-child(4),
+.tours-table td:nth-child(4) {
+    width: 15%; /* Username/City column */
+}
+
+.tours-table th:nth-child(5),
+.tours-table td:nth-child(5) {
+    width: 20%; /* Email column */
+}
+
+.tours-table th:nth-child(6),
+.tours-table td:nth-child(6) {
+    width: 10%; /* Role/Rating column */
+}
+
+.tours-table th:nth-child(7),
+.tours-table td:nth-child(7) {
+    width: 10%; /* Action column */
+    text-align: center;
+}
+
+/* For tables with 8 columns (Users) */
+.tours-table th:nth-child(8),
+.tours-table td:nth-child(8) {
+    width: 10%; /* Additional column */
+    text-align: center;
+}
+
+/* For tables with 9 columns (Bookings) */
+.tours-table th:nth-child(9),
+.tours-table td:nth-child(9) {
+    width: 10%; /* Additional column */
+    text-align: center;
+}
+
+.filter-btn {
+    font-size: 14px;
+    padding: 8px 12px;
+    margin: 2px;
+    border-radius: 5px;
+}
+
+.filter-btn.active {
     background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
 }
 
-.action-btn:hover{
+.action-btn {
+    padding: 6px 8px;
+    margin: 2px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    background: white;
+}
+
+.action-btn:hover {
     background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
 }
 
-.action-btn:hover i{
-    color:#fff !important
+.action-btn:hover i {
+    color: #fff !important;
 }
 
-.action-btn:focus{
+.action-btn:focus {
     background-color: var(--primary-color) !important;
-    color:#fff !important
-}
-.action-btn:focus i{
-    background-color: var(--primary-color) !important;
-    color:#fff !important
+    color: #fff !important;
+    border-color: var(--primary-color);
 }
 
-.add-tour-btn{
+.action-btn:focus i {
+    color: #fff !important;
+}
+
+.add-tour-btn {
     background-color: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
+    padding: 8px 16px;
+    border-radius: 5px;
 }
 
 .add-tour-btn:focus,
-.add-tour-btn:hover{
+.add-tour-btn:hover {
     background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: white !important;
 }
 
-.pagination button{
+.pagination button {
     width: 2rem;
     height: 2rem;
     padding: 5px;
@@ -86,115 +177,265 @@ th, td{
     color: var(--header-color);
     font-size: 1.1rem;
     font-weight: 700;
+    background: white;
+    margin: 0 2px;
 }
 
-.active-page{
+.active-page {
     background-color: var(--secondary-color);
     color: #fff !important;
+    border-color: var(--secondary-color);
 }
 
+.profileimg {
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #dee2e6;
+}
 
-@media screen and (max-width: 805px) {
-    .profileimg{
+/* Responsive Design - Only adjust font sizes and padding, not table width */
+@media screen and (max-width: 1200px) {
+    .tours-table th,
+    .tours-table td {
+        font-size: 13px;
+        padding: 8px 6px;
+    }
+    
+    .profileimg {
+        width: 50px !important;
+        height: 50px !important;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .data-box h1 {
+        font-size: 1.8rem;
+        text-align: center;
+    }
+    
+    .data-box h5 {
+        font-size: 1.1rem;
+        text-align: center;
+    }
+    
+    .tours-table th,
+    .tours-table td {
+        font-size: 12px;
+        padding: 8px 4px;
+    }
+    
+    .profileimg {
+        width: 45px !important;
+        height: 45px !important;
+    }
+    
+    .form-select {
+        font-size: 11px;
+        padding: 4px 8px;
+    }
+    
+    .action-btn {
+        padding: 4px 6px;
+        margin: 1px;
+    }
+    
+    .action-icon {
+        font-size: 16px;
+    }
+    
+    .filter-btn {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+    
+    .add-tour-btn {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .data-box {
+        padding: 0 10px;
+    }
+    
+    .table-box {
+        margin: 0 -10px;
+        border-radius: 0;
+        box-shadow: none;
+        border-top: 1px solid #dee2e6;
+        border-bottom: 1px solid #dee2e6;
+    }
+    
+    .tours-table {
+        border-radius: 0 !important;
+    }
+    
+    .tours-table th,
+    .tours-table td {
+        font-size: 11px;
+        padding: 6px 4px;
+    }
+    
+    .profileimg {
         width: 40px !important;
         height: 40px !important;
     }
-
-    .form-select{
-        font-size: 70% !important;
-        height: 15px;
-        padding: 0 15px;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .tours-table th, .tours-table td {
-        font-size: 70%;
-    }
-    .action-btn i{
-        font-size: 70%;
-    }
-
-    .action-btn{
-        padding: 0 7px;
-    }
-    .menu-item-img{
-        width: 50px;
-        height: 50px;
-    }
-
-    .action-btn i{
-        font-size: 70%;
-    }
-
-    .action-btn{
-        padding: 0 7px;
-    }
-    .dashboard-text{
-        font-size: 80%;
-    }
-    .dashboard-heading{
-        font-size: 25px;
-    }
-    .filter-btn{
-        font-size: 10px !important;
-        padding: 0 3px;
-        height: 25px;
+    
+    .filter-btn {
+        font-size: 10px;
+        padding: 4px 8px;
+        margin: 1px;
     }
     
+    .add-tour-btn {
+        font-size: 11px;
+        padding: 6px 10px;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .d-flex.justify-content-between {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .action-btn {
+        padding: 3px 5px;
+    }
+    
+    .action-icon {
+        font-size: 14px;
+    }
 }
 
-@media screen and (max-width: 768px) {
-    .tours-table th, .tours-table td {
-        font-size: 70%;
+@media screen and (max-width: 576px) {
+    .data-box {
+        padding: 0 5px;
     }
-    .action-btn i{
-        font-size: 70%;
+    
+    .data-box h1 {
+        font-size: 1.3rem;
     }
-
-    .action-btn{
-        padding: 0 7px;
+    
+    .data-box h5 {
+        font-size: 0.9rem;
+    }
+    
+    .table-box {
+        margin: 0 -5px;
+    }
+    
+    .tours-table th,
+    .tours-table td {
+        font-size: 10px;
+        padding: 4px 2px;
+    }
+    
+    .profileimg {
+        width: 35px !important;
+        height: 35px !important;
+    }
+    
+    .action-btn {
+        padding: 2px 4px;
+        margin: 1px;
+    }
+    
+    .action-icon {
+        font-size: 12px;
+    }
+    
+    .filter-btn {
+        font-size: 9px;
+        padding: 3px 6px;
+        margin: 1px;
+    }
+    
+    .add-tour-btn {
+        font-size: 10px;
+        padding: 5px 8px;
+    }
+    
+    .form-select {
+        font-size: 9px;
+        padding: 2px 4px;
+        height: auto;
     }
 }
 
-@media screen and (max-width: 600px) {
-    .tours-table th, .tours-table td {
-        font-size: 50%;
+@media screen and (max-width: 480px) {
+    .tours-table th,
+    .tours-table td {
+        font-size: 9px;
+        padding: 3px 2px;
     }
-    .action-btn i{
-        font-size: 70%;
-        color: var(--secondary-color);
-    }
-
-    .action-btn:hover i{
-        font-size: 70%;
-        color: var(--secondary-color) !important;
-    }
-
-    .action-btn{
-        padding: 0 0;
-        margin: 0;
-        background-color: transparent;
-    }
-
-    .action-btn:hover,
-    .action-btn:active
-    {
-        padding: 0 0;
-        margin: 0;
-        background-color: transparent !important;
-        border-color: transparent;
-        color: var(--secondary-color) !important;
-    }
-
-    .profileimg{
+    
+    .profileimg {
         width: 30px !important;
         height: 30px !important;
     }
-
-    .add-tour-btn{
-        font-size: 10px !important;
-        
-        
+    
+    .filter-btn {
+        font-size: 8px;
+        padding: 2px 4px;
     }
+    
+    .add-tour-btn {
+        font-size: 9px;
+        padding: 4px 6px;
+    }
+    
+    .action-btn {
+        padding: 1px 3px;
+    }
+    
+    .action-icon {
+        font-size: 10px;
+    }
+}
+
+/* Scrollbar styling for better UX */
+.table-box::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-box::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.table-box::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.table-box::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Loading and error states */
+.loading-row,
+.error-row {
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+    color: #666;
+}
+
+.error-row {
+    color: #dc3545;
+}
+
+/* Utility classes for better text handling */
+.text-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.text-wrap {
+    white-space: normal;
+    word-wrap: break-word;
 }
