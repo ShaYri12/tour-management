@@ -89,12 +89,13 @@ const Users = () => {
 
   
   return (
-    <div className='data-box container-fluid pt-4 mt-5'>
-      <div className='row align-item-center justify-content-center'>
-        <div className='col-12'>
-          <h1>Users</h1>
-          <h5 className='ps-3 pt-2'>All Users</h5>
-          <div className='table-box'>
+    <div className='data-box pt-4 mt-5'>
+      <div className='container-fluid'>
+        <div className='row'>
+          <div className='col-12'>
+            <h1>Users</h1>
+            <h5 className='ps-3 pt-2'>All Users</h5>
+            <div className='table-box'>
         <table className="table tours-table shadow">
           <thead>
             <tr>
@@ -142,7 +143,8 @@ const Users = () => {
             </tr>
           ))}
           </tbody>
-          </table>
+            </table>
+            </div>
           </div>
         </div>
       </div>

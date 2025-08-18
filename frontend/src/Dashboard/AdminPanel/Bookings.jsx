@@ -74,21 +74,22 @@ const Bookings = () => {
   };
 
   return (
-    <div className='data-box container-fluid pt-4 mt-5'>
-      <div className='row align-item-center justify-content-center'>
-        <div className='col-12'>
-          <h1>Bookings</h1>
-          <div className='d-flex align-item-center justify-content-between'>
-            <div>
-              <h5 className=' pt-2'>All Bookings</h5>
+    <div className='data-box pt-4 mt-5'>
+      <div className='container-fluid'>
+        <div className='row'>
+          <div className='col-12'>
+            <h1>Bookings</h1>
+            <div className='d-flex align-item-center justify-content-between'>
+              <div>
+                <h5 className=' pt-2'>All Bookings</h5>
+              </div>
+              <div className='d-flex gap-1 align-items-end mb-1'>
+                <button className={`filter-btn btn btn-light ${status === '' ? 'active' : ''}`} onClick={()=>{setStatus('')}}>All</button>
+                <button className={`filter-btn btn btn-light ${status === 'Confirmed' ? 'active' : ''}`} onClick={()=>{setStatus('Confirmed')}}>Confirmed</button>
+                <button className={`filter-btn btn btn-light ${status === 'Cancelled' ? 'active' : ''}`} onClick={()=>{setStatus('Cancelled')}}>Cancelled</button>
+              </div>
             </div>
-            <div className='d-flex gap-1 align-items-end mb-1'>
-              <button className={`filter-btn btn btn-light ${status === '' ? 'active' : ''}`} onClick={()=>{setStatus('')}}>All</button>
-              <button className={`filter-btn btn btn-light ${status === 'Confirmed' ? 'active' : ''}`} onClick={()=>{setStatus('Confirmed')}}>Confirmed</button>
-              <button className={`filter-btn btn btn-light ${status === 'Cancelled' ? 'active' : ''}`} onClick={()=>{setStatus('Cancelled')}}>Cancelled</button>
-            </div>
-          </div>
-          <div className='table-box'>
+            <div className='table-box'>
         <table className="table tours-table shadow">
           <thead>
             <tr>
@@ -145,7 +146,8 @@ const Bookings = () => {
             </tr>
           ))}
           </tbody>
-          </table>
+            </table>
+            </div>
           </div>
         </div>
       </div>

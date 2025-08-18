@@ -1,8 +1,10 @@
-/* Container Styles */
+/* Container Styles - FIXED TO PREVENT SCREEN OVERFLOW */
 .data-box {
     min-height: 100vh;
     width: 100%;
-    max-width: 100%;
+    max-width: 100vw; /* Never exceed viewport width */
+    overflow-x: hidden; /* Prevent container from expanding beyond screen */
+    box-sizing: border-box;
 }
 
 .table-box {
@@ -14,21 +16,27 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     background: white;
     margin-bottom: 20px;
+    box-sizing: border-box;
 }
 
 body {
     min-height: 100vh;
     overflow-x: hidden; /* Prevent body horizontal scroll */
+    box-sizing: border-box;
 }
 
-/* Table Styles - FIXED WIDTH ISSUE */
+/* Ensure all elements use border-box */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Table Styles - COMPLETELY FIXED WIDTH MANAGEMENT */
 .tours-table {
     border-radius: 10px !important;
-    width: 100%; /* CHANGED FROM 120% TO 100% */
-    min-width: 800px; /* Minimum width for proper column layout */
+    width: 100%; /* Always 100% of container */
     margin-bottom: 0;
     border-collapse: collapse;
-    table-layout: auto;
+    table-layout: fixed; /* Fixed layout for better control */
 }
 
 tr {
@@ -55,14 +63,60 @@ th, td {
     vertical-align: middle;
     padding: 10px 8px;
     font-size: 14px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
-/* Specific column handling for text overflow */
+/* Column width distribution for better responsive behavior */
+.tours-table th:first-child,
+.tours-table td:first-child {
+    width: 8%; /* # column */
+    text-align: center;
+}
+
+.tours-table th:nth-child(2),
 .tours-table td:nth-child(2) {
+    width: 25%; /* Main content column */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 200px;
+}
+
+.tours-table th:nth-child(3),
+.tours-table td:nth-child(3) {
+    width: 12%; /* Image/City column */
+}
+
+.tours-table th:nth-child(4),
+.tours-table td:nth-child(4) {
+    width: 12%; /* Secondary info */
+}
+
+.tours-table th:nth-child(5),
+.tours-table td:nth-child(5) {
+    width: 15%; /* Email/Rating */
+}
+
+.tours-table th:nth-child(6),
+.tours-table td:nth-child(6) {
+    width: 10%; /* Price/Role */
+}
+
+.tours-table th:nth-child(7),
+.tours-table td:nth-child(7) {
+    width: 8%; /* Status/Featured */
+}
+
+.tours-table th:nth-child(8),
+.tours-table td:nth-child(8) {
+    width: 10%; /* Action column */
+    text-align: center;
+}
+
+.tours-table th:nth-child(9),
+.tours-table td:nth-child(9) {
+    width: 10%; /* Additional column for bookings */
+    text-align: center;
 }
 
 /* Button Styles */
@@ -169,12 +223,8 @@ th, td {
     background: #a8a8a8;
 }
 
-/* Responsive Design */
+/* Responsive Design - NO MORE MIN-WIDTH ISSUES */
 @media screen and (max-width: 1200px) {
-    .tours-table {
-        min-width: 700px; /* Reduced for better fit */
-    }
-    
     .tours-table th,
     .tours-table td {
         font-size: 13px;
@@ -196,10 +246,6 @@ th, td {
     .data-box h5 {
         font-size: 1.1rem;
         text-align: center;
-    }
-    
-    .tours-table {
-        min-width: 600px; /* Further reduced */
     }
     
     .tours-table th,
@@ -240,26 +286,24 @@ th, td {
 
 @media screen and (max-width: 768px) {
     .data-box {
-        padding: 0 10px;
+        padding: 0 5px; /* Reduced padding */
+        max-width: 100vw;
+        overflow-x: hidden;
     }
     
     .table-box {
-        margin: 0 -10px; /* Extend to screen edges */
+        margin: 0 -5px; /* Extend to screen edges but not beyond */
         border-radius: 0;
         box-shadow: none;
         border-top: 1px solid #dee2e6;
         border-bottom: 1px solid #dee2e6;
-    }
-    
-    .tours-table {
-        min-width: 500px; /* Smaller for mobile */
-        border-radius: 0 !important;
+        max-width: 100vw;
     }
     
     .tours-table th,
     .tours-table td {
         font-size: 11px;
-        padding: 6px 4px;
+        padding: 6px 3px;
     }
     
     .profileimg {
@@ -269,7 +313,7 @@ th, td {
     
     .filter-btn {
         font-size: 10px;
-        padding: 4px 8px;
+        padding: 4px 6px;
         margin: 1px;
     }
     
@@ -287,7 +331,7 @@ th, td {
     }
     
     .action-btn {
-        padding: 3px 5px;
+        padding: 3px 4px;
     }
     
     .action-icon {
@@ -297,7 +341,8 @@ th, td {
 
 @media screen and (max-width: 576px) {
     .data-box {
-        padding: 0 5px;
+        padding: 0 3px;
+        max-width: 100vw;
     }
     
     .data-box h1 {
@@ -309,11 +354,8 @@ th, td {
     }
     
     .table-box {
-        margin: 0 -5px;
-    }
-    
-    .tours-table {
-        min-width: 450px; /* Even smaller for very small screens */
+        margin: 0 -3px;
+        max-width: 100vw;
     }
     
     .tours-table th,
@@ -328,7 +370,7 @@ th, td {
     }
     
     .action-btn {
-        padding: 2px 4px;
+        padding: 2px 3px;
         margin: 1px;
     }
     
@@ -338,7 +380,7 @@ th, td {
     
     .filter-btn {
         font-size: 9px;
-        padding: 3px 6px;
+        padding: 3px 5px;
         margin: 1px;
     }
     
@@ -355,14 +397,20 @@ th, td {
 }
 
 @media screen and (max-width: 480px) {
-    .tours-table {
-        min-width: 400px; /* Minimum for very small screens */
+    .data-box {
+        padding: 0 2px;
+        max-width: 100vw;
+    }
+    
+    .table-box {
+        margin: 0 -2px;
+        max-width: 100vw;
     }
     
     .tours-table th,
     .tours-table td {
         font-size: 9px;
-        padding: 3px 2px;
+        padding: 3px 1px;
     }
     
     .profileimg {
@@ -381,7 +429,7 @@ th, td {
     }
     
     .action-btn {
-        padding: 1px 3px;
+        padding: 1px 2px;
     }
     
     .action-icon {
@@ -400,4 +448,31 @@ th, td {
 
 .error-row {
     color: #dc3545;
+}
+
+/* Utility classes for responsive behavior */
+.text-truncate-responsive {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Ensure Bootstrap containers don't exceed viewport */
+.container-fluid {
+    max-width: 100vw;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+.row {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.col-12 {
+    max-width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+    box-sizing: border-box;
 }
