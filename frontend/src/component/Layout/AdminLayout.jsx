@@ -4,15 +4,12 @@ import Sidebar from '../../Dashboard/AdminPanel/component/Sidebar'
 
 const AdminLayout = () => {
   return (
-    <>
-    <div className='d-sm-none d-block container'><h1>You Cannot View The Admin Panel On Small Devices</h1></div>
-    <div className='d-sm-block d-none '>
-        <div className="d-flex">
+    <div className='w-100'>
+        <div className="d-flex w-100">
             <Sidebar />
             <AdminRouters/>
         </div>  
     </div>
-    </>
   )
 }
 
