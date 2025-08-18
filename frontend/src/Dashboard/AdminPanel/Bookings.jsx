@@ -76,8 +76,6 @@ const Bookings = () => {
   return (
     <div className='data-box pt-4 mt-5'>
       <div className='container-fluid'>
-        <div className='row'>
-          <div className='col-12'>
             <h1>Bookings</h1>
             <div className='d-flex align-item-center justify-content-between'>
               <div>
@@ -147,9 +145,7 @@ const Bookings = () => {
           ))}
           </tbody>
             </table>
-            </div>
           </div>
-        </div>
       </div>
     </div>
   )

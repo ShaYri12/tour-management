@@ -54,8 +54,6 @@ const Admins = () => {
   return (
     <div className='data-box pt-4 mt-5'>
       <div className='container-fluid'>
-        <div className='row'>
-          <div className='col-12'>
             <h1>Users</h1>
             <h5 className='ps-3 pt-2'>All Users</h5>
             <div className='table-box'>
@@ -105,9 +103,7 @@ const Admins = () => {
           ))}
           </tbody>
             </table>
-            </div>
           </div>
-        </div>
       </div>
     </div>
   )

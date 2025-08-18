@@ -148,7 +148,6 @@ th, td {
 
 .active-page {
     background-color: var(--secondary-color);
-    color: #fff !important;
     border-color: var(--secondary-color);
 }
 
